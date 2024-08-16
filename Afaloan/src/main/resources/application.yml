@@ -1,0 +1,41 @@
+info:
+  app:
+    name: Afaloan
+    description: Microloans service
+  team:
+    name: D2 team
+
+spring:
+  application:
+    name: Afaloan
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+
+  liquibase:
+    liquibaseSchema: migration
+    change-log: classpath:/db/changelog/master.yml
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.default_schema: application
+
+  security:
+    jwt:
+      secret: ${SECRET:aGZiYmtiYWllYmNpZWFpZWJsZWNldWNlY2xhZWNhaWJlbGNhZWN3Q0VCV0VXSUM=}
+      access: ${ACCESS:1}
+      refresh: ${REFRESH:24}
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+springdoc:
+  api-docs:
+    enabled: true
+
+api:
+  prefix: /api/v1

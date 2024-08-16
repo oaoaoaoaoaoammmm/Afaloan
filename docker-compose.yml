@@ -1,0 +1,55 @@
+services:
+
+  postgres:
+    container_name: postgres_afaloan
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./database/init_databases.sql:/docker-entrypoint-initdb.d/init_databases.sql
+    profiles:
+      - dev
+      - local
+
+  minio:
+    container_name: minio_afaloan
+    image: bitnami/minio:2024
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: username
+      MINIO_ROOT_PASSWORD: password
+      MINIO_DEFAULT_BUCKETS: afaloan
+
+#    volumes:
+#      -
+    profiles:
+      - dev
+      - local
+
+  afaloan:
+    container_name: afaloan
+    image: afaloan
+    ports:
+      - "8080:8080"
+    build:
+      context: "Afaloan"
+      dockerfile: Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      DB_URL: jdbc:postgresql://postgres:5432/afaloan
+      DB_USER: username
+      DB_PASSWORD: password
+      MINIO_ENDPOINT: http://localhost:9000
+      MINIO_ACCESS_KEY: username
+      MINIO_SECRET_KEY: password
+      MINIO_BUCKET: afaloan
+      MINIO_REGION: us-east-1
+    depends_on:
+      - postgres
+    profiles:
+      - dev
