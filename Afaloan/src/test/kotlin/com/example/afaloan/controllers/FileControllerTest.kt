@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class FileControllerTest : BaseIntegrationTest() {
 
     @Test
-    fun `upload should execute CREATED`() {
+    fun `upload should return CREATED`() {
         uploadDocument()
     }
 
@@ -32,7 +32,7 @@ class FileControllerTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun `delete should execute NO_CONTENT`() {
+    fun `delete should return NO_CONTENT`() {
         val uploadFileResponse = uploadDocument()
         mockMvc.perform(
             delete("$API_PREFIX/files")
@@ -41,7 +41,7 @@ class FileControllerTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun `findPreviews should execute OK`() {
+    fun `findPreviews should return OK`() {
         val uploadFileResponse = uploadDocument()
         mockMvc.perform(
             get("$API_PREFIX/files/previews")
@@ -53,7 +53,7 @@ class FileControllerTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun `findDocumentUrl should execute OK`() {
+    fun `findDocumentUrl should return OK`() {
         val uploadFileResponse = uploadDocument()
         mockMvc.perform(
             get("$API_PREFIX/files/urls")

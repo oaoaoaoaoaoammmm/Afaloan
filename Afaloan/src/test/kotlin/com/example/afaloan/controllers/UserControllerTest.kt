@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -36,7 +36,7 @@ class UserControllerTest : BaseIntegrationTest() {
     @Test
     fun `updateRoles should return NO_CONTENT`() {
         mockMvc.perform(
-            put("$API_PREFIX/users/${USER.id}/roles")
+            patch("$API_PREFIX/users/${USER.id}/roles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     UpdateRolesRequest(listOf(Role.WORKER)).toJson()
@@ -47,7 +47,7 @@ class UserControllerTest : BaseIntegrationTest() {
     @Test
     fun `block should return NO_CONTENT`() {
         mockMvc.perform(
-            put("$API_PREFIX/users/${USER.id}/block")
+            patch("$API_PREFIX/users/${USER.id}/block")
         ).andExpect(status().isNoContent)
     }
 
@@ -61,7 +61,7 @@ class UserControllerTest : BaseIntegrationTest() {
     @Test
     fun `confirm should return NO_CONTENT`() {
         mockMvc.perform(
-            put("$API_PREFIX/users/${USER.id}/confirm")
+            patch("$API_PREFIX/users/${USER.id}/confirm")
         ).andExpect(status().isNoContent)
     }
 }

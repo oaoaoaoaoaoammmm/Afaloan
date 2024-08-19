@@ -29,7 +29,7 @@ val openApiStarterVersion by extra("2.4.0")
 val kLoggingVersion by extra("6.0.8")
 val preliquibaseVersion by extra("1.5.1")
 val jwtVersion by extra("0.12.6")
-val hypersistenceVersion by extra("3.7.5")
+//val hypersistenceVersion by extra("3.7.5")
 val mockitoKotlinVersion by extra("5.3.1")
 
 dependencies {
@@ -41,7 +41,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.liquibase:liquibase-core")
     runtimeOnly("org.postgresql:postgresql")
-    implementation("io.hypersistence:hypersistence-utils-hibernate-63:$hypersistenceVersion")
+    //implementation("io.hypersistence:hypersistence-utils-hibernate-63:$hypersistenceVersion")
     implementation ("net.lbruun.springboot:preliquibase-spring-boot-starter:$preliquibaseVersion")
 
     // minio

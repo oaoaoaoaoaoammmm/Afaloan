@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class RoleControllerTest: BaseIntegrationTest() {
 
     @Test
-    fun `find all roles OK`() {
+    fun `find all roles should return OK`() {
         mockMvc.perform(
             get("$API_PREFIX/roles")
         ).andExpectAll(

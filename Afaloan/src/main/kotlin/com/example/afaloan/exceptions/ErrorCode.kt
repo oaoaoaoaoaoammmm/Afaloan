@@ -11,6 +11,12 @@ enum class ErrorCode {
     TOKEN_DOES_NOT_EXIST,
     TOKEN_INCORRECT_FORMAT,
 
+    // file errors
+    WRONG_FILE,
+    DOCUMENT_NOT_YOURS,
+    UNAVAILABLE_CONTENT_TYPE,
+    FILE_SERVICE_UNAVAILABLE,
+
     // user errors
     FORBIDDEN,
     USER_NOT_FOUND,
@@ -18,9 +24,6 @@ enum class ErrorCode {
     USER_PASSWORD_INCORRECT,
     ROLE_NOT_FOUND,
 
-    // file errors
-    WRONG_FILE,
-    DOCUMENT_NOT_YOURS,
-    UNAVAILABLE_CONTENT_TYPE,
-    FILE_SERVICE_UNAVAILABLE
+    // profiles errors
+    PROFILE_NOT_FOUND
 }

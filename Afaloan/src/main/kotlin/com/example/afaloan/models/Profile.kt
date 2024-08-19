@@ -12,8 +12,6 @@ import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.type.SqlTypes
 import java.util.UUID
 
 @Entity
@@ -23,7 +21,6 @@ data class Profile(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
-
 
     @Column(name = "name")
     @field:Size(min = 1, max = 20)
@@ -56,10 +53,6 @@ data class Profile(
     @Column(name = "inn")
     @field:Pattern(regexp = "^\\d{3}-\\d{3}-\\d{3}-\\d{2}$")
     val inn: String? = null,
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "documents", columnDefinition = "jsonb")
-    val documents: List<String>,
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
