@@ -8,6 +8,7 @@ import com.example.afaloan.controller.auth.dtos.RegisterUserResponse
 import com.example.afaloan.mappers.AuthMapper
 import com.example.afaloan.services.AuthService
 import com.example.afaloan.utils.logger
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,7 +26,7 @@ class AuthController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun register(@RequestBody request: RegisterUserRequest): RegisterUserResponse {
+    fun register(@Valid @RequestBody request: RegisterUserRequest): RegisterUserResponse {
         logger.trace { "Register user with username - ${request.username}" }
         val user = authMapper.convert(request)
         return RegisterUserResponse(authService.register(user))
@@ -33,7 +34,7 @@ class AuthController(
 
     @PostMapping(TOKENS)
     @ResponseStatus(HttpStatus.CREATED)
-    fun authorize(@RequestBody request: AuthorizeUserRequest): AuthorizeUserResponse {
+    fun authorize(@Valid @RequestBody request: AuthorizeUserRequest): AuthorizeUserResponse {
         logger.trace { "Authorize user with username - ${request.username}" }
         val user = authMapper.convert(request)
         return authService.authorize(user)

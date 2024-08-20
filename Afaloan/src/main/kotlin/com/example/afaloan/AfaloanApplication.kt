@@ -11,11 +11,12 @@ import org.springframework.boot.runApplication
 class AfaloanApplication
 
 //  TODO
-//      1   UserController и UserMapper
-//      2   При удалении документа удалять его так же и в Profile -> documents (jsonb)
-//      3   ProfileService и ProfileController и ProfileMapper
-//      4
-//      5
+//      0   A0 - Init commit infrastructure -> DONE
+//      1   А1 - ProfileService и ProfileController и ProfileMapper -> DONE
+//      2   А2 - BoilingPoint и BoilingPointService и BoilingPointsMapper и BoilingPointsController
+//      3   А3 - Microloan и MicroloanService и MicroloanMapper и MicroloanController
+//      4   А4 - Bid и BidService и BidMapper и BidController
+//      5   А5 - Process и ProcessService и ProcessMapper и ProcessController
 //      6
 //      7
 //      8
