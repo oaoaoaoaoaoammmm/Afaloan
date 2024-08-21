@@ -24,6 +24,9 @@ enum class ErrorCode {
     USER_PASSWORD_INCORRECT,
     ROLE_NOT_FOUND,
 
-    // profiles errors
-    PROFILE_NOT_FOUND
+    // profile errors
+    PROFILE_NOT_FOUND,
+
+    // boiling point errors
+    BOILING_POINT_NOT_FOUND
 }
