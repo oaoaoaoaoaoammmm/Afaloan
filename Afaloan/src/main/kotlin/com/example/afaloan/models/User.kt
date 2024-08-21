@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.Table
-import jakarta.validation.constraints.Size
 import java.util.UUID
 
 @Entity
@@ -22,11 +21,9 @@ data class User(
     val id: UUID? = null,
 
     @Column(name = "username")
-    @field:Size(min = 10, max = 64)
     val username: String,
 
     @Column(name = "password")
-    @field:Size(min = 5, max = 60)
     val password: String,
 
     @Column(name = "confirmed")
@@ -38,7 +35,6 @@ data class User(
     @Column(name = "blocked")
     val blocked: Boolean = false,
 
-    @field:Size(min = 1)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
