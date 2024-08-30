@@ -39,7 +39,7 @@ class BoilingPointController(
     fun findAll(
         @Schema(hidden = true) @PageableDefault(size = DEFAULT_PAGE_SIZE) pageable: Pageable
     ): Page<BoilingPoint> {
-        logger.trace { "Find all boiling points" }
+        logger.trace { "Find boiling point's page" }
         return boilingPointService.findPage(pageable)
     }
 

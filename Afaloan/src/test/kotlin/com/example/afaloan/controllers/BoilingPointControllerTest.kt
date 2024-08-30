@@ -67,7 +67,7 @@ class BoilingPointControllerTest : BaseIntegrationTest() {
     }
 
     private fun createBoilingPoint(): UUID {
-        return mockMvc.perform(
+        val response = mockMvc.perform(
             post("$API_PREFIX/boiling-points")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
@@ -81,6 +81,7 @@ class BoilingPointControllerTest : BaseIntegrationTest() {
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString.toObject<CreateBoilingPointResponse>().id
+        ).andReturn().response.contentAsString.toObject<CreateBoilingPointResponse>()
+        return response.id
     }
 }

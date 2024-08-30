@@ -10,6 +10,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
+import java.math.BigDecimal
 import java.util.UUID
 
 @Entity
@@ -43,6 +44,9 @@ data class Profile(
 
     @Column(name = "inn")
     val inn: String? = null,
+
+    @Column(name = "monthly_income")
+    val monthlyIncome: BigDecimal,
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])

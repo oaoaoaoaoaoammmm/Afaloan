@@ -1,5 +1,6 @@
 package com.example.afaloan.controller.profiles.dtos
 
+import java.math.BigDecimal
 import java.util.*
 
 data class ProfileDto(
@@ -12,4 +13,5 @@ data class ProfileDto(
     val passportNumber: String,
     val snils: String? = null,
     val inn: String? = null,
+    val monthlyIncome: BigDecimal
 )

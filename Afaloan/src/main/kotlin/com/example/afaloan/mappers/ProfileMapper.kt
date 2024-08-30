@@ -24,6 +24,7 @@ class ProfileMapper(
             passportNumber = request.passportNumber,
             snils = request.snils,
             inn = request.inn,
+            monthlyIncome = request.monthlyIncome,
             user = userService.find(userId)
         )
     }
@@ -37,6 +38,7 @@ class ProfileMapper(
             phoneNumber = request.phoneNumber,
             passportSeries = request.passportSeries,
             passportNumber = request.passportNumber,
+            monthlyIncome = request.monthlyIncome,
             user = userService.find(userId)
         )
     }
@@ -51,7 +53,8 @@ class ProfileMapper(
             passportSeries = profile.passportSeries,
             passportNumber = profile.passportNumber,
             snils = profile.snils,
-            inn = profile.inn
+            inn = profile.inn,
+            monthlyIncome = profile.monthlyIncome,
         )
     }
 }

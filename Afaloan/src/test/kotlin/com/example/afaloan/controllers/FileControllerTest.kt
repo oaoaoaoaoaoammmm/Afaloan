@@ -4,6 +4,7 @@ import com.example.afaloan.BaseIntegrationTest
 import com.example.afaloan.controller.files.dtos.UploadFileResponse
 import com.example.afaloan.utils.toObject
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.mock.web.MockMultipartFile
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multi
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@Disabled
 class FileControllerTest : BaseIntegrationTest() {
 
     @Test

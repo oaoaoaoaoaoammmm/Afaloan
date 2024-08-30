@@ -28,5 +28,8 @@ enum class ErrorCode {
     PROFILE_NOT_FOUND,
 
     // boiling point errors
-    BOILING_POINT_NOT_FOUND
+    BOILING_POINT_NOT_FOUND,
+
+    // microloan errors
+    MICROLOAN_NOT_FOUND
 }

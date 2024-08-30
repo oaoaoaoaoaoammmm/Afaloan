@@ -9,6 +9,7 @@ import com.example.afaloan.utils.SecurityContext
 import com.example.afaloan.utils.logger
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
@@ -41,7 +42,7 @@ class UserService(
         return userRepository.save(user)
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun updateRoles(id: UUID, roles: Set<UserRole>): User {
         val user = find(id)
         if (!roleService.isExists(roles.map(UserRole::role).toSet())) {
@@ -52,7 +53,7 @@ class UserService(
         return userRepository.save(updatedUser)
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun block(id: UUID) {
         val user = find(id)
         val updatedUser = user.copy(blocked = true)
@@ -60,7 +61,7 @@ class UserService(
         userRepository.save(updatedUser)
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun unblock(id: UUID) {
         val user = find(id)
         val updatedUser = user.copy(blocked = false)
@@ -68,7 +69,7 @@ class UserService(
         userRepository.save(updatedUser)
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun confirm(id: UUID) {
         val user = find(id)
         val updatedUser = user.copy(confirmed = true)
@@ -86,7 +87,7 @@ class UserService(
         TODO("Not implemented yet, mb send email?")
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun delete(id: UUID) {
         val user = find(id)
         val userId = SecurityContext.getAuthorizedUserId()
@@ -97,7 +98,7 @@ class UserService(
         userRepository.deleteById(id)
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun delete(username: String) {
         val user = find(username)
         val userId = SecurityContext.getAuthorizedUserId()

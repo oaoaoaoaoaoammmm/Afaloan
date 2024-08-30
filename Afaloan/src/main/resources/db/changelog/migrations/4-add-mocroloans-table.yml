@@ -1,11 +1,11 @@
 databaseChangeLog:
   - changeSet:
-      id: add-boiling-points-table
-      author: d.afanasev
+      id: add-microloans-table
+      author: d.muxabat
       changes:
         - createTable:
             schemaName: application
-            tableName: boiling_points
+            tableName: microloans
             columns:
               - column:
                   name: id
@@ -15,20 +15,20 @@ databaseChangeLog:
                     nullable: false
                     primaryKey: true
               - column:
-                  name: city
+                  name: name
                   type: varchar(32)
                   constraints:
                     nullable: false
               - column:
-                  name: address
-                  type: varchar(64)
+                  name: sum
+                  type: decimal(10, 2)
                   constraints:
                     nullable: false
               - column:
-                  name: opening_hours
-                  type: varchar(64)
+                  name: monthly_income_requirement
+                  type: decimal(10, 2)
                   constraints:
                     nullable: false
               - column:
-                  name: info
+                  name: other_requirements
                   type: varchar(200)
