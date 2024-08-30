@@ -16,6 +16,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
+import java.math.BigDecimal
 import java.util.*
 
 class ProfileServiceTest {
@@ -107,6 +108,7 @@ class ProfileServiceTest {
             phoneNumber = "+79832422045",
             passportSeries = "1234",
             passportNumber = "123456",
+            monthlyIncome = BigDecimal.TEN,
             user = USER
         )
     }

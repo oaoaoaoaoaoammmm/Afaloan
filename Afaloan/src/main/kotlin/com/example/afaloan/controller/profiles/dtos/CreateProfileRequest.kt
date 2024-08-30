@@ -1,7 +1,9 @@
 package com.example.afaloan.controller.profiles.dtos
 
+import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
+import java.math.BigDecimal
 
 data class CreateProfileRequest(
     @field:Size(min = 1, max = 20)
@@ -19,5 +21,7 @@ data class CreateProfileRequest(
     @field:Size(min = 14, max = 14)
     val snils: String? = null,
     @field:Pattern(regexp = "^\\d{3}-\\d{3}-\\d{3}-\\d{2}$")
-    val inn: String? = null
+    val inn: String? = null,
+    @field:Min(1)
+    val monthlyIncome: BigDecimal
 )

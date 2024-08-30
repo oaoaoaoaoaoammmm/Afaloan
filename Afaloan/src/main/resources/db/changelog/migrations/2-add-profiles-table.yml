@@ -49,6 +49,11 @@ databaseChangeLog:
                   name: inn
                   type: varchar(12)
               - column:
+                  name: monthly_income
+                  type: decimal(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
                   name: user_id
                   type: uuid
                   constraints:

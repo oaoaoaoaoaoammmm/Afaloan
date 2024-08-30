@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.math.BigDecimal
 import java.util.UUID
 
 class ProfileControllerTest : BaseIntegrationTest() {
@@ -46,7 +47,8 @@ class ProfileControllerTest : BaseIntegrationTest() {
             patronymic = "ch patronymic",
             phoneNumber = "+79832422045",
             passportSeries = "1234",
-            passportNumber = "123456"
+            passportNumber = "123456",
+            monthlyIncome = BigDecimal.TEN
         )
         val updatedProfile = mockMvc.perform(
             put("$API_PREFIX/profiles/$profileId")
@@ -77,6 +79,7 @@ class ProfileControllerTest : BaseIntegrationTest() {
                         phoneNumber = "+79832422045",
                         passportSeries = "1234",
                         passportNumber = "123456",
+                        monthlyIncome = BigDecimal.TEN
                     ).toJson()
                 )
         ).andExpectAll(
