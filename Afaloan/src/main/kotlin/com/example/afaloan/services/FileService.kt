@@ -16,8 +16,7 @@ class FileService(
     private val idGenerator: IdGenerator
 ) {
 
-    fun download(path: String): ByteArray {
-        val userId = SecurityContext.getAuthorizedUserId().toString()
+    fun download(path: String, userId: String): ByteArray {
         if (!path.contains(userId)) {
             throw InternalException(httpStatus = HttpStatus.FORBIDDEN, errorCode = ErrorCode.DOCUMENT_NOT_YOURS)
         }
@@ -25,14 +24,13 @@ class FileService(
         return s3Api.download(path)
     }
 
-    fun findObjectsPreviewsByUser(): List<String> {
-        val userId = SecurityContext.getAuthorizedUserId().toString()
+    fun findObjectsPreviewsByUser(userId: String): List<String> {
+
         logger.info { "Finding document's previews by user - $userId" }
         return s3Api.findObjectsPreviews(userId)
     }
 
-    fun findObjectUrl(path: String): String {
-        val userId = SecurityContext.getAuthorizedUserId().toString()
+    fun findObjectUrl(path: String, userId: String): String {
         if (!path.contains(userId)) {
             throw InternalException(httpStatus = HttpStatus.FORBIDDEN, errorCode = ErrorCode.DOCUMENT_NOT_YOURS)
         }

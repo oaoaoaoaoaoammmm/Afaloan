@@ -4,7 +4,6 @@ import com.example.afaloan.exceptions.ErrorCode
 import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.Profile
 import com.example.afaloan.repositories.ProfileRepository
-import com.example.afaloan.utils.SecurityContext
 import com.example.afaloan.utils.logger
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -19,15 +18,20 @@ class ProfileService(
 
     fun find(id: UUID): Profile {
         logger.info { "Finding profile by id - $id" }
-        val userId = SecurityContext.getAuthorizedUserId()
-        return profileRepository.findByIdAndUserId(id, userId)
-            ?: throw InternalException(httpStatus = HttpStatus.NOT_FOUND, errorCode = ErrorCode.PROFILE_NOT_FOUND)
-
+        return profileRepository.findById(id).orElseThrow {
+            InternalException(httpStatus = HttpStatus.NOT_FOUND, errorCode = ErrorCode.PROFILE_NOT_FOUND)
+        }
     }
 
     fun find(id: UUID, userId: UUID): Profile {
         logger.info { "Finding profile by id - $id" }
         return profileRepository.findByIdAndUserId(id, userId)
+            ?: throw InternalException(httpStatus = HttpStatus.NOT_FOUND, errorCode = ErrorCode.PROFILE_NOT_FOUND)
+    }
+
+    fun findByUserID(userId: UUID): Profile {
+        logger.info { "Find profile by user id - $userId" }
+        return profileRepository.findByUserId(userId)
             ?: throw InternalException(httpStatus = HttpStatus.NOT_FOUND, errorCode = ErrorCode.PROFILE_NOT_FOUND)
     }
 

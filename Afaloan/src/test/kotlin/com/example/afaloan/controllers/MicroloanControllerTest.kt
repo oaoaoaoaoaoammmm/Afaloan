@@ -55,6 +55,8 @@ class MicroloanControllerTest : BaseIntegrationTest() {
                     MicroloanDto(
                         name = "name ch",
                         sum = BigDecimal.TWO,
+                        monthlyInterest = BigDecimal.ZERO,
+                        conditions = "conditions",
                         monthlyIncomeRequirement = BigDecimal.TEN,
                         otherRequirements = "other requirements ch"
                     ).toJson()
@@ -82,6 +84,8 @@ class MicroloanControllerTest : BaseIntegrationTest() {
                     MicroloanDto(
                         name = "name",
                         sum = BigDecimal.ONE,
+                        monthlyInterest = BigDecimal.ZERO,
+                        conditions = "conditions",
                         monthlyIncomeRequirement = BigDecimal.TWO,
                         otherRequirements = "other requirements"
                     ).toJson()

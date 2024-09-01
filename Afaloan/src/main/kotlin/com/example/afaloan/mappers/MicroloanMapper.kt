@@ -11,6 +11,8 @@ class MicroloanMapper {
         return MicroloanDto(
             name = microloan.name,
             sum = microloan.sum,
+            monthlyInterest = microloan.monthlyInterest,
+            conditions = microloan.conditions,
             monthlyIncomeRequirement = microloan.monthlyIncomeRequirement,
             otherRequirements = microloan.otherRequirements
         )
@@ -21,6 +23,8 @@ class MicroloanMapper {
             id = null,
             name = dto.name,
             sum = dto.sum,
+            monthlyInterest = dto.monthlyInterest,
+            conditions = dto.conditions,
             monthlyIncomeRequirement = dto.monthlyIncomeRequirement,
             otherRequirements = dto.otherRequirements
         )

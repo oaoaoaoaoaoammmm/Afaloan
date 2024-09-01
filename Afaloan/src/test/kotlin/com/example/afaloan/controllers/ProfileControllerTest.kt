@@ -68,7 +68,7 @@ class ProfileControllerTest : BaseIntegrationTest() {
     }
 
     private fun createProfile(): UUID {
-        return mockMvc.perform(
+        val response = mockMvc.perform(
             post("$API_PREFIX/profiles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
@@ -85,7 +85,7 @@ class ProfileControllerTest : BaseIntegrationTest() {
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString
-            .toObject<CreateProfileResponse>().id
+        ).andReturn().response.contentAsString.toObject<CreateProfileResponse>()
+        return response.id
     }
 }

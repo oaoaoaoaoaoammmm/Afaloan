@@ -17,6 +17,8 @@ class MicroloanMapperTest {
             id = UUID.randomUUID(),
             name = "name",
             sum = BigDecimal.TWO,
+            monthlyInterest = BigDecimal.ZERO,
+            conditions = "conditions",
             monthlyIncomeRequirement = BigDecimal.ONE,
             otherRequirements = "other requirements"
         )
@@ -33,6 +35,8 @@ class MicroloanMapperTest {
         val dto = MicroloanDto(
             name = "name",
             sum = BigDecimal.TWO,
+            monthlyInterest = BigDecimal.ZERO,
+            conditions = "conditions",
             monthlyIncomeRequirement = BigDecimal.ONE,
             otherRequirements = "other requirements"
         )

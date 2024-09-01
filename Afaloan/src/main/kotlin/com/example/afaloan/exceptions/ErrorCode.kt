@@ -31,5 +31,8 @@ enum class ErrorCode {
     BOILING_POINT_NOT_FOUND,
 
     // microloan errors
-    MICROLOAN_NOT_FOUND
+    MICROLOAN_NOT_FOUND,
+
+    // bid errors
+    BID_NOT_FOUND
 }
