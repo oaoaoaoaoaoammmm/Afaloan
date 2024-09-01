@@ -38,7 +38,7 @@ class FileServiceTest {
         val byteArray = javaClass.getResourceAsStream("/document.png")!!.readAllBytes()
         whenever(s3Api.download(any())).thenReturn(byteArray)
 
-        val result = fileService.download(path)
+        val result = fileService.download(path, USER.id.toString())
 
         assertThat(byteArray).isEqualTo(result)
     }
@@ -47,7 +47,7 @@ class FileServiceTest {
     fun `download should throw FORBIDDEN`() {
         val path = "userId/uuid/document.png"
 
-        val internalException = assertThrows<InternalException> { fileService.download(path) }
+        val internalException = assertThrows<InternalException> { fileService.download(path, USER.id.toString()) }
 
         assertThat(internalException.httpStatus).isEqualTo(HttpStatus.FORBIDDEN)
         assertThat(internalException.errorCode).isEqualTo(ErrorCode.DOCUMENT_NOT_YOURS)
@@ -58,7 +58,7 @@ class FileServiceTest {
         val previews = listOf("doc1", "doc2")
         whenever(s3Api.findObjectsPreviews(any())).thenReturn(previews)
 
-        val result = fileService.findObjectsPreviewsByUser()
+        val result = fileService.findObjectsPreviewsByUser(USER.id.toString())
 
         assertThat(previews.size).isEqualTo(result.size)
     }
@@ -69,7 +69,7 @@ class FileServiceTest {
         val path = "${USER.id}/uuid/document.png"
         whenever(s3Api.findPresignedObject(any())).thenReturn(url)
 
-        val result = fileService.findObjectUrl(path)
+        val result = fileService.findObjectUrl(path, USER.id.toString())
 
         assertThat(result).isEqualTo(url)
     }
@@ -78,7 +78,7 @@ class FileServiceTest {
     fun `findObjectUrl should throw FORBIDDEN`() {
         val path = "userId/uuid/document.png"
 
-        val internalException = assertThrows<InternalException> { fileService.findObjectUrl(path) }
+        val internalException = assertThrows<InternalException> { fileService.findObjectUrl(path, USER.id.toString()) }
 
         assertThat(internalException.httpStatus).isEqualTo(HttpStatus.FORBIDDEN)
         assertThat(internalException.errorCode).isEqualTo(ErrorCode.DOCUMENT_NOT_YOURS)

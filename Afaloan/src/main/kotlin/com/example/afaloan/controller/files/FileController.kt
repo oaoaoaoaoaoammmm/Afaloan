@@ -5,6 +5,7 @@ import com.example.afaloan.controller.files.dtos.FindFileUrlResponse
 import com.example.afaloan.controller.files.dtos.UploadFileResponse
 import com.example.afaloan.services.FileService
 import com.example.afaloan.utils.AVAILABLE_DOCUMENT_TYPES
+import com.example.afaloan.utils.SecurityContext
 import com.example.afaloan.utils.logger
 import org.springframework.http.ContentDisposition
 import org.springframework.http.HttpStatus
@@ -35,9 +36,12 @@ class FileController(
     }
 
     @GetMapping(produces = [MediaType.APPLICATION_OCTET_STREAM_VALUE])
-    fun download(@RequestParam path: String): ResponseEntity<ByteArray> {
+    fun download(
+        @RequestParam path: String,
+        @RequestParam(required = false) userId: String = SecurityContext.getAuthorizedUserId().toString()
+    ): ResponseEntity<ByteArray> {
         logger.trace { "Download document by path - $path" }
-        return fileService.download(path)
+        return fileService.download(path, userId)
             .asFileResponseEntity(path.split("/").last())
     }
 
@@ -50,18 +54,23 @@ class FileController(
 
     @GetMapping(PREVIEWS)
     @ResponseStatus(HttpStatus.OK)
-    fun findPreviews(): Collection<String> {
+    fun findPreviews(
+        @RequestParam(required = false) userId: String = SecurityContext.getAuthorizedUserId().toString()
+    ): Collection<String> {
         logger.trace { "Find document previews" }
-        val previews = fileService.findObjectsPreviewsByUser()
+        val previews = fileService.findObjectsPreviewsByUser(userId)
         logger.trace { "Found previews - $previews" }
         return previews
     }
 
     @GetMapping(URLS)
     @ResponseStatus(HttpStatus.OK)
-    fun findDocumentUrl(@RequestParam path: String): FindFileUrlResponse {
+    fun findDocumentUrl(
+        @RequestParam path: String,
+        @RequestParam(required = false) userId: String = SecurityContext.getAuthorizedUserId().toString()
+    ): FindFileUrlResponse {
         logger.trace { "Find document url by path - $path" }
-        val url = fileService.findObjectUrl(path)
+        val url = fileService.findObjectUrl(path, userId)
         return FindFileUrlResponse(url)
     }
 

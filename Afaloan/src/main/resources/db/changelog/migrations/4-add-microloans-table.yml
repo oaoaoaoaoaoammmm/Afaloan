@@ -25,6 +25,16 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: monthly_interest
+                  type: decimal(3, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: conditions
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
                   name: monthly_income_requirement
                   type: decimal(10, 2)
                   constraints:

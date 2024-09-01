@@ -23,6 +23,12 @@ data class Microloan(
     @Column(name = "sum")
     val sum: BigDecimal,
 
+    @Column(name = "monthly_interest")
+    val monthlyInterest: BigDecimal,
+
+    @Column(name = "conditions")
+    val conditions: String,
+
     @Column(name = "monthly_income_requirement")
     val monthlyIncomeRequirement: BigDecimal,
 

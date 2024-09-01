@@ -34,7 +34,7 @@ class ProfileServiceTest {
     @Test
     fun `find(id UUID) should execute successfully`() {
         val profile = createProfile()
-        whenever(profileRepository.findByIdAndUserId(any(), any())).thenReturn(profile)
+        whenever(profileRepository.findById(any())).thenReturn(Optional.of(profile))
 
         val result = profileService.find(profile.id!!)
 

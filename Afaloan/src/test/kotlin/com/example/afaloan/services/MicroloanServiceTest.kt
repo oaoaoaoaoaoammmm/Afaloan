@@ -99,6 +99,8 @@ class MicroloanServiceTest {
             id = UUID.randomUUID(),
             name = "name",
             sum = BigDecimal.TEN,
+            monthlyInterest = BigDecimal.ZERO,
+            conditions = "conditions",
             monthlyIncomeRequirement = BigDecimal.TWO,
             otherRequirements = "other requirements"
         )
