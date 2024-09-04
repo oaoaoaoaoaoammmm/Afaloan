@@ -73,7 +73,7 @@ class AuthServiceTest {
     @Test
     fun `reAuthorize should execute successfully`() {
         whenever(authProvider.isValid(any())).thenReturn(true)
-        whenever(authProvider.getIdFromToken(any())).thenReturn(UNAUTHORIZED_USER.id)
+        whenever(authProvider.getIdFromToken(any())).thenReturn(UNAUTHORIZED_USER.id.toString())
         whenever(userService.find(UNAUTHORIZED_USER.id!!)).thenReturn(UNAUTHORIZED_USER)
         whenever(authProvider.createAccessToken(any(), any(), any())).thenReturn("access")
         whenever(authProvider.createRefreshToken(any(), any())).thenReturn("refresh")

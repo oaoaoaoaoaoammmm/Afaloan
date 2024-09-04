@@ -39,4 +39,4 @@ springdoc:
 
 api:
   prefix: /api/v1
-  page-size: 50
+

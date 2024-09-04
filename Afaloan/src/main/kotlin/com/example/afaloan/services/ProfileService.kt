@@ -36,14 +36,14 @@ class ProfileService(
     }
 
     fun create(profile: Profile): UUID {
-        logger.info { "Creating profile for user with id - ${profile.user.id}" }
+        logger.info { "Creating profile for user with id - ${profile.user!!.id}" }
         return profileRepository.save(profile).id!!
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun update(id: UUID, profile: Profile): Profile {
-        logger.info { "Updating profile for user with id - ${profile.user.id}" }
-        val oldProfile = find(id, profile.user.id!!)
+        logger.info { "Updating profile for user with id - ${profile.user!!.id}" }
+        val oldProfile = find(id, profile.user!!.id!!)
         val newProfile = profile.copy(
             id = oldProfile.id,
             snils = oldProfile.snils,

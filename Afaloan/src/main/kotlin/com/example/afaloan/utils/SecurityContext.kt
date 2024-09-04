@@ -16,7 +16,7 @@ object SecurityContext {
         ?: throw InternalException(HttpStatus.FORBIDDEN, ErrorCode.FORBIDDEN)
 
     private val Authentication.id: UUID
-        get() = this.principal as UUID
+        get() = UUID.fromString(this.principal as String)
 
     private val Authentication.username: String
         get() = this.credentials as String

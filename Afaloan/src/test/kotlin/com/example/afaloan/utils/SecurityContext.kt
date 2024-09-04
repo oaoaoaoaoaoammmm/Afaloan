@@ -18,7 +18,7 @@ fun mockSecurityContext() {
 
 private fun createTestAuthentication(): Authentication {
     val auth = mock<UsernamePasswordAuthenticationToken>()
-    whenever(auth.principal).thenReturn(USER.id!!)
+    whenever(auth.principal).thenReturn(USER.id!!.toString())
     whenever(auth.credentials).thenReturn(USER.username)
     whenever(auth.authorities).thenReturn(
         USER.roles.map(UserRole::role)

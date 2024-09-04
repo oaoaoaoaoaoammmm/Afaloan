@@ -2,7 +2,7 @@ package com.example.afaloan.services
 
 import com.example.afaloan.models.enumerations.Role
 import com.example.afaloan.repositories.RoleRepository
-import com.example.afaloan.utils.ROLES
+import com.example.afaloan.utils.USER
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,17 +19,17 @@ class RoleServiceTest {
 
     @Test
     fun `findAll should execute successfully`() {
-        whenever(roleRepository.findAll()).thenReturn(ROLES.toList())
+        whenever(roleRepository.findAll()).thenReturn(USER.roles.toList())
 
         val result = roleService.findAll()
 
-        assertThat(result).isEqualTo(ROLES.toList())
+        assertThat(result).isEqualTo(USER.roles.toList())
     }
 
     @ParameterizedTest
     @MethodSource("positiveCasesSourceForSingleArg")
     fun `isExists(role Role) should return true`(role: Role) {
-        whenever(roleRepository.findAll()).thenReturn(ROLES.toList())
+        whenever(roleRepository.findAll()).thenReturn(USER.roles.toList())
 
         val result = roleService.isExists(role)
 
@@ -39,7 +39,7 @@ class RoleServiceTest {
     @ParameterizedTest
     @MethodSource("positiveCasesSourceForSetArg")
     fun `isExists(roles Set) should return true`(roles: Set<Role>) {
-        whenever(roleRepository.findAll()).thenReturn(ROLES.toList())
+        whenever(roleRepository.findAll()).thenReturn(USER.roles.toList())
 
         val result = roleService.isExists(roles)
 

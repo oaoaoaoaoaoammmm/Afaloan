@@ -9,6 +9,7 @@ import com.example.afaloan.services.UserService
 import com.example.afaloan.utils.logger
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -43,6 +44,7 @@ class UserController(
 
     @PatchMapping("/{id}/$ROLES")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('SUPERVISOR')")
     fun updateRoles(
         @PathVariable id: UUID,
         @Valid @RequestBody request: UpdateRolesRequest
@@ -54,6 +56,7 @@ class UserController(
 
     @PatchMapping("/{id}/$BLOCK")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun block(@PathVariable id: UUID) {
         logger.trace { "Block user by id - $id" }
         userService.block(id)
@@ -61,6 +64,7 @@ class UserController(
 
     @DeleteMapping("/{id}/$BLOCK")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun unblock(@PathVariable id: UUID) {
         logger.trace { "Unblock user with id - $id" }
         userService.unblock(id)
@@ -68,6 +72,7 @@ class UserController(
 
     @PatchMapping("/{id}/$CONFIRM")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun confirm(@PathVariable id: UUID) {
         logger.trace { "Confirm user with id - $id" }
         userService.confirm(id)

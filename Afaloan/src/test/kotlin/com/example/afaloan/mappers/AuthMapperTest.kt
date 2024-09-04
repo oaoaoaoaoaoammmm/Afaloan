@@ -4,7 +4,7 @@ import com.example.afaloan.controller.auth.dtos.AuthorizeUserRequest
 import com.example.afaloan.controller.auth.dtos.RegisterUserRequest
 import com.example.afaloan.models.enumerations.Role
 import com.example.afaloan.services.RoleService
-import com.example.afaloan.utils.ROLES
+import com.example.afaloan.utils.USER
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -24,7 +24,7 @@ class AuthMapperTest {
             roles = listOf(Role.WORKER)
         )
 
-        whenever(roleService.findAll()).thenReturn(ROLES.toList())
+        whenever(roleService.findAll()).thenReturn(USER.roles.toList())
 
         val result = authMapper.convert(request)
 

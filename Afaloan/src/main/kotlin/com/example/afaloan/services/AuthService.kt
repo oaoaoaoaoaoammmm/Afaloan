@@ -43,7 +43,7 @@ class AuthService(
         if (!authProvider.isValid(refreshToken)) {
             throw InternalException(HttpStatus.UNAUTHORIZED, ErrorCode.TOKEN_EXPIRED)
         }
-        val id = authProvider.getIdFromToken(refreshToken)
+        val id = UUID.fromString(authProvider.getIdFromToken(refreshToken))
         val user = userService.find(id)
         logger.info { "Refreshing token for user with $id" }
         return createAuthorizeUserResponse(user)
@@ -54,11 +54,11 @@ class AuthService(
             id = user.id!!,
             username = user.username,
             access = authProvider.createAccessToken(
-                userId = user.id,
+                userId = user.id!!,
                 username = user.username,
                 roles = user.roles.map(UserRole::role).toSet()
             ),
-            refresh = authProvider.createRefreshToken(userId = user.id, username = user.username)
+            refresh = authProvider.createRefreshToken(userId = user.id!!, username = user.username)
         )
     }
 }

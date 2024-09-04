@@ -3,7 +3,6 @@ package com.example.afaloan
 import com.example.afaloan.configurations.PostgresAutoConfiguration
 import com.example.afaloan.repositories.RoleRepository
 import com.example.afaloan.repositories.UserRepository
-import com.example.afaloan.utils.ROLES
 import com.example.afaloan.utils.USER
 import com.example.afaloan.utils.mockSecurityContext
 import org.junit.jupiter.api.AfterAll
@@ -54,8 +53,8 @@ abstract class BaseIntegrationTest {
     private fun createUserIfNotExist() {
         val user = userRepository.findById(USER.id!!)
         if (user.isEmpty) {
-            userRoleRepository.saveAll(ROLES)
-            USER = userRepository.save(USER)
+            val roles = userRoleRepository.findAll().toSet()
+            USER = userRepository.save(USER.copy(roles = roles))
         }
     }
 

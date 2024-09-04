@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -43,7 +44,7 @@ class BidController(
     @GetMapping(params = ["boilingPointId"])
     @ResponseStatus(HttpStatus.OK)
     fun findPageByBoilingPointId(
-        @RequestParam boilingPointId: UUID,
+        @RequestParam(required = false) boilingPointId: UUID,
         @Schema(hidden = true) @PageableDefault(size = DEFAULT_PAGE_SIZE) pageable: Pageable
     ): Page<BidView> {
         logger.trace { "Find page of bids by boiling point id - $boilingPointId" }
@@ -53,7 +54,7 @@ class BidController(
     @GetMapping(params = ["profileId"])
     @ResponseStatus(HttpStatus.OK)
     fun findPageByProfileId(
-        @RequestParam profileId: UUID,
+        @RequestParam(required = false) profileId: UUID,
         @Schema(hidden = true) @PageableDefault(size = DEFAULT_PAGE_SIZE) pageable: Pageable
     ): Page<BidView> {
         logger.trace { "Find page of bids by profile id - $profileId" }
@@ -63,7 +64,7 @@ class BidController(
     @GetMapping(params = ["microloanId"])
     @ResponseStatus(HttpStatus.OK)
     fun findPageByMicroloanId(
-        @RequestParam microloanId: UUID,
+        @RequestParam(required = false) microloanId: UUID,
         @Schema(hidden = true) @PageableDefault(size = DEFAULT_PAGE_SIZE) pageable: Pageable
     ): Page<BidView> {
         logger.trace { "Find page of bids by microloan id - $microloanId" }
@@ -81,6 +82,7 @@ class BidController(
 
     @PatchMapping(value = ["/{id}"], params = ["status"])
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun updateStatus(
         @PathVariable id: UUID,
         @RequestParam status: BidStatus,

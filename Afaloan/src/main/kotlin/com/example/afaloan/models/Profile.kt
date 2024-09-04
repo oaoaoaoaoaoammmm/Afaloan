@@ -1,6 +1,5 @@
 package com.example.afaloan.models
 
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -48,7 +47,7 @@ data class Profile(
     @Column(name = "monthly_income")
     val monthlyIncome: BigDecimal,
 
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
-    val user: User
+    val user: User? = null
 )

@@ -62,10 +62,10 @@ class AuthenticationProvider(
 
     fun getIdFromToken(token: String) = token.id
 
-    private val String.id: UUID
+    private val String.id: String
         get() {
             val jwtParser = Jwts.parser().verifyWith(key).build()
-            return jwtParser.parseSignedClaims(this).payload.get("id", UUID::class.java)
+            return jwtParser.parseSignedClaims(this).payload.get("id", String::class.java)
         }
 
     private val String.username: String
@@ -77,9 +77,8 @@ class AuthenticationProvider(
     private val String.roles: List<GrantedAuthority>
         get() {
             val jwtParser = Jwts.parser().verifyWith(key).build()
-            val roles = jwtParser.parseSignedClaims(this).payload["roles"] as Set<*>
-            return roles.map { it as Role }
-                .map { it.name }
+            val roles = jwtParser.parseSignedClaims(this).payload["roles"] as List<*>
+            return roles.map { it as String }
                 .map { SimpleGrantedAuthority(it) }
         }
 }
