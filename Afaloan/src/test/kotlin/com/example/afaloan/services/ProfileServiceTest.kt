@@ -58,7 +58,7 @@ class ProfileServiceTest {
         val profile = createProfile()
         whenever(profileRepository.findByIdAndUserId(any(), any())).thenReturn(profile)
 
-        val result = profileService.find(profile.id!!, profile.user.id!!)
+        val result = profileService.find(profile.id!!, profile.user!!.id!!)
 
         assertThat(result.id).isEqualTo(profile.id)
         assertThat(result.name).isEqualTo(profile.name)

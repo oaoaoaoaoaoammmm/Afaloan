@@ -20,6 +20,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+allOpen {
+    annotation("jakarta.persistence.Entity")
+}
+
 repositories {
     mavenCentral()
 }
@@ -31,6 +35,7 @@ val preliquibaseVersion by extra("1.5.1")
 val jwtVersion by extra("0.12.6")
 //val hypersistenceVersion by extra("3.7.5")
 val mockitoKotlinVersion by extra("5.3.1")
+extra["jackson-bom.version"] = "2.17.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")

@@ -47,7 +47,7 @@ databaseChangeLog:
                   type: varchar(14)
               - column:
                   name: inn
-                  type: varchar(12)
+                  type: varchar(14)
               - column:
                   name: monthly_income
                   type: decimal(10, 2)

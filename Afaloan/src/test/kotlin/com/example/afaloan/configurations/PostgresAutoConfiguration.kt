@@ -13,6 +13,7 @@ class PostgresAutoConfiguration {
     @ServiceConnection
     fun postgresContainer(): PostgreSQLContainer<*> {
         return PostgreSQLContainer(DockerImageName.parse("postgres:16"))
+            .withDatabaseName("afaloan")
             .withInitScript("preliquibase/default.sql")
     }
 }

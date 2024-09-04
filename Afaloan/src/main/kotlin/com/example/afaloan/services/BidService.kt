@@ -33,7 +33,8 @@ class BidService(
 
     fun findPageByProfileId(profileId: UUID, pageable: Pageable): Page<Bid> {
         logger.info { "Finding page with number - ${pageable.pageNumber} by profile id - $profileId" }
-        return bidRepository.findPageByProfileId(profileId, pageable)
+        val result = bidRepository.findPageByProfileId(profileId, pageable)
+        return result
     }
 
     fun findPageByMicroloanId(microloanID: UUID, pageable: Pageable): Page<Bid> {

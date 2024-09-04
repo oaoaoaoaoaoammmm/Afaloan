@@ -5,7 +5,6 @@ import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.User
 import com.example.afaloan.models.UserRole
 import com.example.afaloan.repositories.UserRepository
-import com.example.afaloan.utils.ROLES
 import com.example.afaloan.utils.UNAUTHORIZED_USER
 import com.example.afaloan.utils.USER
 import com.example.afaloan.utils.mockSecurityContext
@@ -86,16 +85,16 @@ class UserServiceTest {
 
     @Test
     fun `updateRoles should execute successfully`() {
-        val roles = ROLES
+        val roles = USER.roles
         whenever(userRepository.findById(any())).thenReturn(Optional.of(USER))
         whenever(roleService.isExists(roles.map(UserRole::role).toSet())).thenReturn(true)
         whenever(userRepository.save(any<User>())).thenReturn(USER.copy(roles = roles))
 
-        val result = userService.updateRoles(USER.id!!, ROLES)
+        val result = userService.updateRoles(USER.id!!, USER.roles)
 
         assertThat(result.id).isEqualTo(USER.id)
         assertThat(result.username).isEqualTo(USER.username)
-        assertThat(result.roles).isEqualTo(ROLES)
+        assertThat(result.roles).isEqualTo(USER.roles)
     }
 
     @Test

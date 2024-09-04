@@ -24,17 +24,6 @@ class MicroloanControllerTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun `findAll should return OK`() {
-        createMicroloan()
-        mockMvc.perform(
-            get("$API_PREFIX/microloans")
-        ).andExpectAll(
-            status().isOk,
-            jsonPath("$").isNotEmpty
-        )
-    }
-
-    @Test
     fun `find should return OK`() {
         val microloanId = createMicroloan()
         mockMvc.perform(

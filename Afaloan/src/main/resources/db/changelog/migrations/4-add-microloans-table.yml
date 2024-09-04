@@ -26,7 +26,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: monthly_interest
-                  type: decimal(3, 2)
+                  type: decimal(5, 2)
                   constraints:
                     nullable: false
               - column:

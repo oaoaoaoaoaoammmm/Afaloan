@@ -16,7 +16,7 @@ class AfaloanApplication
 //      2   А2 - BoilingPoint и BoilingPointService и BoilingPointsMapper и BoilingPointsController -> DONE
 //      3   А3 - Microloan и MicroloanService и MicroloanMapper и MicroloanController -> DONE
 //      4   А4 - Bid и BidService и BidMapper и BidController -> DONE
-//      5   А5 - Добавить @PreAuthorize
+//      5   А5 - Добавить @PreAuthorize -> DONE
 //      6   А6 - Process и ProcessService и ProcessMapper и ProcessController
 //      7   A7 - Рефакторинг тестов
 //      8
