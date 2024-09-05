@@ -34,5 +34,8 @@ enum class ErrorCode {
     MICROLOAN_NOT_FOUND,
 
     // bid errors
-    BID_NOT_FOUND
+    BID_NOT_FOUND,
+
+    // process errors
+    PROCESS_NOT_FOUND
 }
