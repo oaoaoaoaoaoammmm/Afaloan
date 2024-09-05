@@ -35,7 +35,7 @@ val preliquibaseVersion by extra("1.5.1")
 val jwtVersion by extra("0.12.6")
 //val hypersistenceVersion by extra("3.7.5")
 val mockitoKotlinVersion by extra("5.3.1")
-extra["jackson-bom.version"] = "2.17.0"
+val shedLockVersion by extra("5.12.0")
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -66,6 +66,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
     implementation("io.jsonwebtoken:jjwt-impl:$jwtVersion")
     implementation("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
+
+    // shedlock
+    implementation("net.javacrumbs.shedlock:shedlock-spring:$shedLockVersion")
+    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:$shedLockVersion")
 
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

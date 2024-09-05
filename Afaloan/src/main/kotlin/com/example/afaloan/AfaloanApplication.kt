@@ -17,13 +17,11 @@ class AfaloanApplication
 //      3   А3 - Microloan и MicroloanService и MicroloanMapper и MicroloanController -> DONE
 //      4   А4 - Bid и BidService и BidMapper и BidController -> DONE
 //      5   А5 - Добавить @PreAuthorize -> DONE
-//      6   А6 - Process и ProcessService и ProcessMapper и ProcessController
+//      6   А6 - Process и ProcessService и ProcessMapper и ProcessController -> DONE
 //      7   A7 - Рефакторинг тестов
 //      8
 //      9
 //      10
-//      ...
-//      n   Тесты
 
 fun main(args: Array<String>) {
     runApplication<AfaloanApplication>(*args)
