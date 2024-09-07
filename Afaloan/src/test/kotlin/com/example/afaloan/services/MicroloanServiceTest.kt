@@ -4,6 +4,7 @@ import com.example.afaloan.exceptions.ErrorCode
 import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.Microloan
 import com.example.afaloan.repositories.MicroloanRepository
+import com.example.afaloan.utils.createMicroloan
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -92,17 +93,5 @@ class MicroloanServiceTest {
     @Test
     fun `delete should execute successfully`() {
         assertDoesNotThrow { microloanService.delete(UUID.randomUUID()) }
-    }
-
-    private fun createMicroloan(): Microloan {
-        return Microloan(
-            id = UUID.randomUUID(),
-            name = "name",
-            sum = BigDecimal.TEN,
-            monthlyInterest = BigDecimal.ZERO,
-            conditions = "conditions",
-            monthlyIncomeRequirement = BigDecimal.TWO,
-            otherRequirements = "other requirements"
-        )
     }
 }

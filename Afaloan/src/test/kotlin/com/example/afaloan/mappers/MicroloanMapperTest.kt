@@ -1,11 +1,9 @@
 package com.example.afaloan.mappers
 
-import com.example.afaloan.controller.microloans.dtos.MicroloanDto
-import com.example.afaloan.models.Microloan
+import com.example.afaloan.utils.createMicroloan
+import com.example.afaloan.utils.createMicroloanDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.math.BigDecimal
-import java.util.*
 
 class MicroloanMapperTest {
 
@@ -13,15 +11,7 @@ class MicroloanMapperTest {
 
     @Test
     fun `convert(microloan Microloan) should execute successfully`() {
-        val microloan = Microloan(
-            id = UUID.randomUUID(),
-            name = "name",
-            sum = BigDecimal.TWO,
-            monthlyInterest = BigDecimal.ZERO,
-            conditions = "conditions",
-            monthlyIncomeRequirement = BigDecimal.ONE,
-            otherRequirements = "other requirements"
-        )
+        val microloan = createMicroloan()
 
         val result = microloanMapper.convert(microloan)
 
@@ -32,14 +22,7 @@ class MicroloanMapperTest {
 
     @Test
     fun `convert(dto MicroloanDto) should execute successfully`() {
-        val dto = MicroloanDto(
-            name = "name",
-            sum = BigDecimal.TWO,
-            monthlyInterest = BigDecimal.ZERO,
-            conditions = "conditions",
-            monthlyIncomeRequirement = BigDecimal.ONE,
-            otherRequirements = "other requirements"
-        )
+        val dto = createMicroloanDto()
 
         val result = microloanMapper.convert(dto)
 

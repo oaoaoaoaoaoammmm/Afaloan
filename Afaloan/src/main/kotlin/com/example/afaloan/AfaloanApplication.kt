@@ -18,7 +18,7 @@ class AfaloanApplication
 //      4   А4 - Bid и BidService и BidMapper и BidController -> DONE
 //      5   А5 - Добавить @PreAuthorize -> DONE
 //      6   А6 - Process и ProcessService и ProcessMapper и ProcessController -> DONE
-//      7   A7 - Рефакторинг тестов
+//      7   A7 - Рефакторинг тестов -> DONE
 //      8
 //      9
 //      10

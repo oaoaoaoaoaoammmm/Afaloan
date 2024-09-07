@@ -3,9 +3,9 @@ package com.example.afaloan.services
 import com.example.afaloan.exceptions.ErrorCode
 import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.Bid
-import com.example.afaloan.models.enumerations.BidPriority
 import com.example.afaloan.models.enumerations.BidStatus
 import com.example.afaloan.repositories.BidRepository
+import com.example.afaloan.utils.createBid
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -16,7 +16,6 @@ import org.mockito.kotlin.whenever
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
-import java.time.LocalDateTime
 import java.util.*
 
 class BidServiceTest {
@@ -93,16 +92,5 @@ class BidServiceTest {
         whenever(bidRepository.findById(any())).thenReturn(Optional.of(bid))
 
         assertDoesNotThrow { bidService.updateStatus(bid.id!!, BidStatus.CLOSED) }
-    }
-
-    private fun createBid(): Bid {
-        return Bid(
-            id = UUID.randomUUID(),
-            target = "target",
-            coverLetter = "cover letter",
-            date = LocalDateTime.now(),
-            priority = BidPriority.MEDIUM,
-            status = BidStatus.UNDER_CONSIDERATION
-        )
     }
 }

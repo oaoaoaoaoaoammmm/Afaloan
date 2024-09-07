@@ -40,7 +40,7 @@ class MicroloanService(
         return microloanRepository.save(microloan).id!!
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun update(id: UUID, microloan: Microloan): Microloan {
         logger.info { "Updating microloan by id - $id" }
         val oldMicroloan = find(id)

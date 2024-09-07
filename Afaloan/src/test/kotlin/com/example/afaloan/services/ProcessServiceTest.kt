@@ -2,13 +2,10 @@ package com.example.afaloan.services
 
 import com.example.afaloan.exceptions.ErrorCode
 import com.example.afaloan.exceptions.InternalException
-import com.example.afaloan.models.Bid
-import com.example.afaloan.models.Microloan
 import com.example.afaloan.models.Process
-import com.example.afaloan.models.enumerations.BidPriority
-import com.example.afaloan.models.enumerations.BidStatus
 import com.example.afaloan.models.enumerations.ProcessStatus
 import com.example.afaloan.repositories.ProcessRepository
+import com.example.afaloan.utils.createProcess
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -20,7 +17,6 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import java.math.BigDecimal
-import java.time.LocalDateTime
 import java.util.*
 
 class ProcessServiceTest {
@@ -91,31 +87,5 @@ class ProcessServiceTest {
         whenever(processRepository.findAllByStatus(any())).thenReturn(processes)
 
         assertDoesNotThrow { processService.calculateMonthlyInterest() }
-    }
-
-    private fun createProcess(): Process {
-        return Process(
-            id = UUID.randomUUID(),
-            debt = BigDecimal.valueOf(100),
-            status = ProcessStatus.IN_PROCESSING,
-            comment = "comment",
-            bid = Bid(
-                id = UUID.randomUUID(),
-                target = "target",
-                coverLetter = "cover letter",
-                date = LocalDateTime.now(),
-                priority = BidPriority.MEDIUM,
-                status = BidStatus.CLOSED,
-                microloan = Microloan(
-                    id = UUID.randomUUID(),
-                    name = "name",
-                    sum = BigDecimal.TEN,
-                    monthlyInterest = BigDecimal.ZERO,
-                    conditions = "conditions",
-                    monthlyIncomeRequirement = BigDecimal.TWO,
-                    otherRequirements = "other requirements"
-                )
-            )
-        )
     }
 }

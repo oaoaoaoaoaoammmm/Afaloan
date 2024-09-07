@@ -3,19 +3,19 @@ package com.example.afaloan.controllers
 import com.example.afaloan.BaseIntegrationTest
 import com.example.afaloan.controller.bids.dtos.CreateBidRequest
 import com.example.afaloan.controller.bids.dtos.CreateBidResponse
-import com.example.afaloan.controller.boilingpoints.dtos.CreateBoilingPointRequest
 import com.example.afaloan.controller.boilingpoints.dtos.CreateBoilingPointResponse
 import com.example.afaloan.controller.microloans.dtos.CreateMicroloanResponse
-import com.example.afaloan.controller.microloans.dtos.MicroloanDto
 import com.example.afaloan.controller.processes.dtos.CreateProcessRequest
 import com.example.afaloan.controller.processes.dtos.CreateProcessResponse
 import com.example.afaloan.controller.processes.dtos.ProcessDto
-import com.example.afaloan.controller.profiles.dtos.CreateProfileRequest
 import com.example.afaloan.controller.profiles.dtos.CreateProfileResponse
 import com.example.afaloan.models.enumerations.BidPriority
 import com.example.afaloan.models.enumerations.ProcessStatus
-import com.example.afaloan.utils.toJson
 import com.example.afaloan.utils.toObject
+import com.example.afaloan.utils.toJson
+import com.example.afaloan.utils.createCreateProfileRequest
+import com.example.afaloan.utils.createMicroloanDto
+import com.example.afaloan.utils.createCreateBoilingPointRequest
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -129,17 +129,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
         val response = mockMvc.perform(
             post("$API_PREFIX/profiles")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    CreateProfileRequest(
-                        name = "name",
-                        surname = "surname",
-                        patronymic = "patronymic",
-                        phoneNumber = "+79832422045",
-                        passportSeries = "1234",
-                        passportNumber = "123456",
-                        monthlyIncome = BigDecimal.TEN
-                    ).toJson()
-                )
+                .content(createCreateProfileRequest().toJson())
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty
@@ -151,16 +141,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
         val response = mockMvc.perform(
             post("$API_PREFIX/microloans")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    MicroloanDto(
-                        name = "name",
-                        sum = BigDecimal.ONE,
-                        monthlyInterest = BigDecimal.ZERO,
-                        conditions = "conditions",
-                        monthlyIncomeRequirement = BigDecimal.TWO,
-                        otherRequirements = "other requirements"
-                    ).toJson()
-                )
+                .content(createMicroloanDto().toJson())
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty
@@ -172,14 +153,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
         val response = mockMvc.perform(
             post("$API_PREFIX/boiling-points")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    CreateBoilingPointRequest(
-                        city = "Taishet",
-                        address = "Cherniy vanya 3a",
-                        openingHours = "Пн-Пт: 09:00-18:00, Сб: 10:00-15:00, Вс: выходной",
-                        info = "info"
-                    ).toJson()
-                )
+                .content(createCreateBoilingPointRequest().toJson())
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty

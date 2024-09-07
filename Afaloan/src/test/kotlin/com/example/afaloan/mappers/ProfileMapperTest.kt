@@ -1,10 +1,10 @@
 package com.example.afaloan.mappers
 
-import com.example.afaloan.controller.profiles.dtos.CreateProfileRequest
-import com.example.afaloan.controller.profiles.dtos.UpdateProfileRequest
-import com.example.afaloan.models.Profile
 import com.example.afaloan.services.UserService
 import com.example.afaloan.utils.USER
+import com.example.afaloan.utils.createProfile
+import com.example.afaloan.utils.createCreateProfileRequest
+import com.example.afaloan.utils.createUpdateProfileRequest
 import com.example.afaloan.utils.mockSecurityContext
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -14,7 +14,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.security.core.context.SecurityContextHolder
-import java.math.BigDecimal
 import java.util.UUID
 
 class ProfileMapperTest {
@@ -62,43 +61,5 @@ class ProfileMapperTest {
         assertThat(result.name).isEqualTo(result.name)
         assertThat(result.surname).isEqualTo(result.surname)
         assertThat(result.phoneNumber).isEqualTo(result.phoneNumber)
-    }
-
-    private fun createCreateProfileRequest(): CreateProfileRequest {
-        return CreateProfileRequest(
-            name = "name",
-            surname = "surname",
-            patronymic = "patronymic",
-            phoneNumber = "+79832422045",
-            passportSeries = "1234",
-            passportNumber = "123456",
-            monthlyIncome = BigDecimal.TEN
-        )
-    }
-
-    private fun createUpdateProfileRequest(): UpdateProfileRequest {
-        return UpdateProfileRequest(
-            name = "name",
-            surname = "surname",
-            patronymic = "patronymic",
-            phoneNumber = "+79832422045",
-            passportSeries = "1234",
-            passportNumber = "123456",
-            monthlyIncome = BigDecimal.TEN
-        )
-    }
-
-    private fun createProfile(): Profile {
-        return Profile(
-            id = UUID.randomUUID(),
-            name = "name",
-            surname = "surname",
-            patronymic = "patronymic",
-            phoneNumber = "+79832422045",
-            passportSeries = "1234",
-            passportNumber = "123456",
-            monthlyIncome = BigDecimal.TEN,
-            user = USER
-        )
     }
 }

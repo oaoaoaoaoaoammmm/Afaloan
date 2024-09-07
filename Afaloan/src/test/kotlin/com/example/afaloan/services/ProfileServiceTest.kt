@@ -4,7 +4,7 @@ import com.example.afaloan.exceptions.ErrorCode
 import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.Profile
 import com.example.afaloan.repositories.ProfileRepository
-import com.example.afaloan.utils.USER
+import com.example.afaloan.utils.createProfile
 import com.example.afaloan.utils.mockSecurityContext
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -16,7 +16,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
-import java.math.BigDecimal
 import java.util.*
 
 class ProfileServiceTest {
@@ -97,19 +96,5 @@ class ProfileServiceTest {
         assertThat(result.id).isEqualTo(newProfile.id)
         assertThat(result.name).isEqualTo(newProfile.name)
         assertThat(result.phoneNumber).isEqualTo(newProfile.phoneNumber)
-    }
-
-    private fun createProfile(): Profile {
-        return Profile(
-            id = UUID.randomUUID(),
-            name = "name",
-            surname = "surname",
-            patronymic = "patronymic",
-            phoneNumber = "+79832422045",
-            passportSeries = "1234",
-            passportNumber = "123456",
-            monthlyIncome = BigDecimal.TEN,
-            user = USER
-        )
     }
 }

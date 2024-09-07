@@ -4,6 +4,7 @@ import com.example.afaloan.exceptions.ErrorCode
 import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.BoilingPoint
 import com.example.afaloan.repositories.BoilingPointRepository
+import com.example.afaloan.utils.createBoilingPoint
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -81,15 +82,5 @@ class BoilingPointServiceTest {
     @Test
     fun `delete should execute successfully`() {
         assertDoesNotThrow { boilingPointService.delete(UUID.randomUUID()) }
-    }
-
-    private fun createBoilingPoint(): BoilingPoint {
-        return BoilingPoint(
-            id = UUID.randomUUID(),
-            city = "Taishet",
-            address = "Cherniy vanya 3a",
-            openingHours = "Пн-Пт: 09:00-18:00, Сб: 10:00-14:00, Вс: выходной",
-            info = "info"
-        )
     }
 }

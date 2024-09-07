@@ -20,7 +20,6 @@ class S3Configuration {
         if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(s3Properties.bucket).build())) {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(s3Properties.bucket).build())
         }
-
         return minioClient
     }
 }

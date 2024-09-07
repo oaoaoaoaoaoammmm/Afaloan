@@ -18,12 +18,7 @@ class AuthMapperTest {
 
     @Test
     fun `convert(request RegisterUserRequest) should execute successfully`() {
-        val request = RegisterUserRequest(
-            username = "username",
-            password = "password",
-            roles = listOf(Role.WORKER)
-        )
-
+        val request = RegisterUserRequest(username = "username", password = "password", roles = listOf(Role.WORKER))
         whenever(roleService.findAll()).thenReturn(USER.roles.toList())
 
         val result = authMapper.convert(request)
