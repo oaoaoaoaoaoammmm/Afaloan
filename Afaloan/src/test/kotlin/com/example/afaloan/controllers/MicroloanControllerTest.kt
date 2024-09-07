@@ -2,7 +2,7 @@ package com.example.afaloan.controllers
 
 import com.example.afaloan.BaseIntegrationTest
 import com.example.afaloan.controller.microloans.dtos.CreateMicroloanResponse
-import com.example.afaloan.controller.microloans.dtos.MicroloanDto
+import com.example.afaloan.utils.createMicroloanDto
 import com.example.afaloan.utils.toJson
 import com.example.afaloan.utils.toObject
 import org.junit.jupiter.api.Test
@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.math.BigDecimal
 import java.util.*
 
 class MicroloanControllerTest : BaseIntegrationTest() {
@@ -41,14 +40,9 @@ class MicroloanControllerTest : BaseIntegrationTest() {
             put("$API_PREFIX/microloans/$microloanId")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    MicroloanDto(
-                        name = "name ch",
-                        sum = BigDecimal.TWO,
-                        monthlyInterest = BigDecimal.ZERO,
-                        conditions = "conditions",
-                        monthlyIncomeRequirement = BigDecimal.TEN,
-                        otherRequirements = "other requirements ch"
-                    ).toJson()
+                    createMicroloanDto()
+                        .copy(name = "name ch", otherRequirements = "other requirements ch")
+                        .toJson()
                 )
         ).andExpectAll(
             status().isOk,
@@ -69,16 +63,7 @@ class MicroloanControllerTest : BaseIntegrationTest() {
         val response = mockMvc.perform(
             post("$API_PREFIX/microloans")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    MicroloanDto(
-                        name = "name",
-                        sum = BigDecimal.ONE,
-                        monthlyInterest = BigDecimal.ZERO,
-                        conditions = "conditions",
-                        monthlyIncomeRequirement = BigDecimal.TWO,
-                        otherRequirements = "other requirements"
-                    ).toJson()
-                )
+                .content(createMicroloanDto().toJson())
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty

@@ -25,7 +25,6 @@ class FileService(
     }
 
     fun findObjectsPreviewsByUser(userId: String): List<String> {
-
         logger.info { "Finding document's previews by user - $userId" }
         return s3Api.findObjectsPreviews(userId)
     }
