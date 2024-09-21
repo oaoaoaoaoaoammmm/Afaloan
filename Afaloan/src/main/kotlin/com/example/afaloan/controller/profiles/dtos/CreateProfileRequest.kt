@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 import java.math.BigDecimal
+import java.util.UUID
 
 data class CreateProfileRequest(
     @field:Size(min = 1, max = 20)
@@ -23,5 +24,6 @@ data class CreateProfileRequest(
     @field:Pattern(regexp = "^\\d{3}-\\d{3}-\\d{3}-\\d{2}$")
     val inn: String? = null,
     @field:Min(1)
-    val monthlyIncome: BigDecimal
+    val monthlyIncome: BigDecimal,
+    val userId: UUID
 )

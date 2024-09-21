@@ -1,21 +1,20 @@
 package com.example.afaloan.controllers
 
 import com.example.afaloan.BaseIntegrationTest
-import com.example.afaloan.controller.bids.dtos.CreateBidRequest
-import com.example.afaloan.controller.bids.dtos.CreateBidResponse
+import com.example.afaloan.controller.orders.dtos.CreateOrderRequest
+import com.example.afaloan.controller.orders.dtos.CreateOrderResponse
 import com.example.afaloan.controller.boilingpoints.dtos.CreateBoilingPointResponse
 import com.example.afaloan.controller.microloans.dtos.CreateMicroloanResponse
 import com.example.afaloan.controller.processes.dtos.CreateProcessRequest
 import com.example.afaloan.controller.processes.dtos.CreateProcessResponse
 import com.example.afaloan.controller.processes.dtos.ProcessDto
-import com.example.afaloan.controller.profiles.dtos.CreateProfileResponse
-import com.example.afaloan.models.enumerations.BidPriority
+import com.example.afaloan.models.enumerations.OrderPriority
 import com.example.afaloan.models.enumerations.ProcessStatus
-import com.example.afaloan.utils.toObject
-import com.example.afaloan.utils.toJson
-import com.example.afaloan.utils.createCreateProfileRequest
-import com.example.afaloan.utils.createMicroloanDto
 import com.example.afaloan.utils.createCreateBoilingPointRequest
+import com.example.afaloan.utils.PROFILE
+import com.example.afaloan.utils.createMicroloanDto
+import com.example.afaloan.utils.toJson
+import com.example.afaloan.utils.toObject
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -43,7 +42,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
             jsonPath("$.debt").isNotEmpty,
             jsonPath("$.comment").isNotEmpty,
             jsonPath("$.status").isNotEmpty,
-            jsonPath("$.bidId").isNotEmpty
+            jsonPath("$.orderId").isNotEmpty
         )
     }
 
@@ -73,7 +72,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
                         debt = BigDecimal.ZERO,
                         comment = "comment",
                         status = ProcessStatus.CLOSED,
-                        bidId = createBid()
+                        orderId = createOrder()
                     ).toJson()
                 )
         ).andExpectAll(
@@ -81,7 +80,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
             jsonPath("$.debt").value(BigDecimal.ZERO.toString()),
             jsonPath("$.comment").value("comment"),
             jsonPath("$.status").value(ProcessStatus.CLOSED.toString()),
-            jsonPath("$.bidId").isNotEmpty
+            jsonPath("$.orderId").isNotEmpty
         )
     }
 
@@ -93,7 +92,7 @@ class ProcessControllerTest : BaseIntegrationTest() {
                     CreateProcessRequest(
                         debt = BigDecimal.TEN,
                         comment = "comment",
-                        bidId = createBid()
+                        orderId = createOrder()
                     ).toJson()
                 )
         ).andExpectAll(
@@ -103,15 +102,15 @@ class ProcessControllerTest : BaseIntegrationTest() {
         return response.id
     }
 
-    private fun createBid(): UUID {
+    private fun createOrder(): UUID {
         val response = mockMvc.perform(
-            post("$API_PREFIX/bids")
+            post("$API_PREFIX/orders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    CreateBidRequest(
+                    CreateOrderRequest(
                         target = "target",
                         coverLetter = "cover letter",
-                        priority = BidPriority.MEDIUM,
+                        priority = OrderPriority.MEDIUM,
                         employeeMessage = "employee message",
                         profileId = createProfile(),
                         microloanId = createMicroloan(),
@@ -121,20 +120,12 @@ class ProcessControllerTest : BaseIntegrationTest() {
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString.toObject<CreateBidResponse>()
+        ).andReturn().response.contentAsString.toObject<CreateOrderResponse>()
         return response.id
     }
 
     private fun createProfile(): UUID {
-        val response = mockMvc.perform(
-            post("$API_PREFIX/profiles")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(createCreateProfileRequest().toJson())
-        ).andExpectAll(
-            status().isCreated,
-            jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString.toObject<CreateProfileResponse>()
-        return response.id
+        return PROFILE.id!!
     }
 
     private fun createMicroloan(): UUID {

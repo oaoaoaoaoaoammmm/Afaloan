@@ -1,6 +1,6 @@
 package com.example.afaloan.utils
 
-import com.example.afaloan.controller.bids.dtos.CreateBidRequest
+import com.example.afaloan.controller.orders.dtos.CreateOrderRequest
 import com.example.afaloan.controller.boilingpoints.dtos.CreateBoilingPointRequest
 import com.example.afaloan.controller.boilingpoints.dtos.UpdateBoilingPointRequest
 import com.example.afaloan.controller.microloans.dtos.MicroloanDto
@@ -8,22 +8,18 @@ import com.example.afaloan.controller.processes.dtos.CreateProcessRequest
 import com.example.afaloan.controller.processes.dtos.ProcessDto
 import com.example.afaloan.controller.profiles.dtos.CreateProfileRequest
 import com.example.afaloan.controller.profiles.dtos.UpdateProfileRequest
-import com.example.afaloan.models.Bid
+import com.example.afaloan.models.Order
 import com.example.afaloan.models.User
 import com.example.afaloan.models.BoilingPoint
 import com.example.afaloan.models.Microloan
 import com.example.afaloan.models.Process
 import com.example.afaloan.models.Profile
-import com.example.afaloan.models.UserRole
-import com.example.afaloan.models.enumerations.BidPriority
-import com.example.afaloan.models.enumerations.BidStatus
+import com.example.afaloan.models.enumerations.OrderPriority
+import com.example.afaloan.models.enumerations.OrderStatus
 import com.example.afaloan.models.enumerations.ProcessStatus
-import com.example.afaloan.models.enumerations.Role
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
-
-const val USER_PASSWORD = "12345"
 
 const val ENCODED_USER_PASSWORD = "\$2a\$10\$.IEUyyxTZjIGYnDHOcFW3e8AD5QFAKWj7nu7NM1NfBs.wE6AtC83a"
 
@@ -37,21 +33,11 @@ var USER = User(
     roles = setOf()
 )
 
-val UNAUTHORIZED_USER = User(
-    id = UUID.randomUUID(),
-    username = "johan.do@mail.ru",
-    password = "12345678",
-    confirmed = false,
-    confirmedUsername = false,
-    blocked = false,
-    roles = setOf(UserRole(id = UUID.randomUUID(), Role.CUSTOMER))
-)
-
 /**
  * Profile
  */
 
-fun createProfile() = Profile(
+var PROFILE = Profile(
     id = UUID.randomUUID(),
     name = "name",
     surname = "surname",
@@ -70,7 +56,8 @@ fun createCreateProfileRequest() = CreateProfileRequest(
     phoneNumber = "+79832422045",
     passportSeries = "1234",
     passportNumber = "123456",
-    monthlyIncome = BigDecimal.TEN
+    monthlyIncome = BigDecimal.TEN,
+    userId = USER.id!!
 )
 
 fun createUpdateProfileRequest() = UpdateProfileRequest(
@@ -80,7 +67,8 @@ fun createUpdateProfileRequest() = UpdateProfileRequest(
     phoneNumber = "+79832422045",
     passportSeries = "1234",
     passportNumber = "123456",
-    monthlyIncome = BigDecimal.TEN
+    monthlyIncome = BigDecimal.TEN,
+    userId = USER.id!!
 )
 
 /**
@@ -133,57 +121,57 @@ fun createUpdateBoilingPointRequest() = UpdateBoilingPointRequest(
 )
 
 /**
- * Bid
+ * Order
  */
 
-fun createBid(
-    profile: Profile = createProfile(),
+fun createOrder(
+    profile: Profile = PROFILE,
     microloan: Microloan = createMicroloan(),
     boilingPoint: BoilingPoint = createBoilingPoint()
-) = Bid(
+) = Order(
     id = UUID.randomUUID(),
     target = "target",
     coverLetter = "cover letter",
     date = LocalDateTime.now(),
-    priority = BidPriority.MEDIUM,
-    status = BidStatus.UNDER_CONSIDERATION,
+    priority = OrderPriority.MEDIUM,
+    status = OrderStatus.UNDER_CONSIDERATION,
     employeeMessage = "employee message",
     profile = profile,
     microloan = microloan,
     boilingPoint = boilingPoint
 )
 
-fun createCreateBidRequest(bid: Bid = createBid()) = CreateBidRequest(
-    target = bid.target,
-    coverLetter = bid.coverLetter,
-    priority = bid.priority,
-    employeeMessage = bid.employeeMessage,
-    profileId = bid.profile!!.id!!,
-    microloanId = bid.microloan!!.id!!,
-    boilingPointId = bid.boilingPoint!!.id!!
+fun createCreateOrderRequest(order: Order = createOrder()) = CreateOrderRequest(
+    target = order.target,
+    coverLetter = order.coverLetter,
+    priority = order.priority,
+    employeeMessage = order.employeeMessage,
+    profileId = order.profile!!.id!!,
+    microloanId = order.microloan!!.id!!,
+    boilingPointId = order.boilingPoint!!.id!!
 )
 
 /**
  * Process
  */
 
-fun createProcess(bid: Bid = createBid()) = Process(
+fun createProcess(order: Order = createOrder()) = Process(
     id = UUID.randomUUID(),
-    debt = bid.microloan!!.sum,
+    debt = order.microloan!!.sum,
     status = ProcessStatus.IN_PROCESSING,
     comment = "comment",
-    bid = bid
+    order = order
 )
 
 fun createCreateProcessRequest(process: Process = createProcess()) = CreateProcessRequest(
     debt = process.debt,
     comment = process.comment,
-    bidId = process.bid!!.id!!
+    orderId = process.order!!.id!!
 )
 
 fun createProcessDto(process: Process = createProcess()) = ProcessDto(
     debt = process.debt,
     comment = process.comment,
     status = ProcessStatus.IN_PROCESSING,
-    bidId = process.bid!!.id!!
+    orderId = process.order!!.id!!
 )

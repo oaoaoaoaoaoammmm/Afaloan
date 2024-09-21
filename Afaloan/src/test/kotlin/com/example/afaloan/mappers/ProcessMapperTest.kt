@@ -1,7 +1,7 @@
 package com.example.afaloan.mappers
 
-import com.example.afaloan.services.BidService
-import com.example.afaloan.utils.createBid
+import com.example.afaloan.services.OrderService
+import com.example.afaloan.utils.createOrder
 import com.example.afaloan.utils.createCreateProcessRequest
 import com.example.afaloan.utils.createProcess
 import com.example.afaloan.utils.createProcessDto
@@ -13,9 +13,9 @@ import org.mockito.kotlin.whenever
 
 class ProcessMapperTest {
 
-    private val bidService = mock<BidService>()
+    private val orderService = mock<OrderService>()
 
-    private val processMapper = ProcessMapper(bidService)
+    private val processMapper = ProcessMapper(orderService)
 
     @Test
     fun `convertToDto should execute successfully`() {
@@ -41,9 +41,9 @@ class ProcessMapperTest {
 
     @Test
     fun `convert(request CreateProcessRequest) should execute successfully`() {
-        val bid = createBid()
+        val order = createOrder()
         val request = createCreateProcessRequest()
-        whenever(bidService.find(any())).thenReturn(bid)
+        whenever(orderService.find(any())).thenReturn(order)
 
         val result = processMapper.convert(request)
 
@@ -53,9 +53,9 @@ class ProcessMapperTest {
 
     @Test
     fun `convert(dto ProcessDto) should execute successfully`() {
-        val bid = createBid()
+        val order = createOrder()
         val dto = createProcessDto()
-        whenever(bidService.find(any())).thenReturn(bid)
+        whenever(orderService.find(any())).thenReturn(order)
 
         val result = processMapper.convert(dto)
 

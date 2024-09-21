@@ -1,9 +1,8 @@
 package com.example.afaloan.controllers
 
 import com.example.afaloan.BaseIntegrationTest
-import com.example.afaloan.controller.profiles.dtos.CreateProfileResponse
 import com.example.afaloan.controller.profiles.dtos.ProfileDto
-import com.example.afaloan.utils.createCreateProfileRequest
+import com.example.afaloan.utils.PROFILE
 import com.example.afaloan.utils.createUpdateProfileRequest
 import com.example.afaloan.utils.toJson
 import com.example.afaloan.utils.toObject
@@ -11,18 +10,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.UUID
 
 class ProfileControllerTest : BaseIntegrationTest() {
-
-    @Test
-    fun `create should return CREATED`() {
-        createProfile()
-    }
 
     @Test
     fun `find should return OK`() {
@@ -59,14 +52,6 @@ class ProfileControllerTest : BaseIntegrationTest() {
     }
 
     private fun createProfile(): UUID {
-        val response = mockMvc.perform(
-            post("$API_PREFIX/profiles")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(createCreateProfileRequest().toJson())
-        ).andExpectAll(
-            status().isCreated,
-            jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString.toObject<CreateProfileResponse>()
-        return response.id
+        return PROFILE.id!!
     }
 }

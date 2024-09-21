@@ -6,23 +6,11 @@ enum class ErrorCode {
     INVALID_REQUEST,
     SERVICE_UNAVAILABLE,
 
-    // jwt errors
-    TOKEN_EXPIRED,
-    TOKEN_DOES_NOT_EXIST,
-    TOKEN_INCORRECT_FORMAT,
-
-    // file errors
-    WRONG_FILE,
-    DOCUMENT_NOT_YOURS,
-    UNAVAILABLE_CONTENT_TYPE,
-    FILE_SERVICE_UNAVAILABLE,
-
     // user errors
     FORBIDDEN,
     USER_NOT_FOUND,
-    USER_ALREADY_EXIST,
-    USER_PASSWORD_INCORRECT,
     ROLE_NOT_FOUND,
+    USER_ALREADY_EXISTS,
 
     // profile errors
     PROFILE_NOT_FOUND,
@@ -33,8 +21,8 @@ enum class ErrorCode {
     // microloan errors
     MICROLOAN_NOT_FOUND,
 
-    // bid errors
-    BID_NOT_FOUND,
+    // order errors
+    ORDER_NOT_FOUND,
 
     // process errors
     PROCESS_NOT_FOUND

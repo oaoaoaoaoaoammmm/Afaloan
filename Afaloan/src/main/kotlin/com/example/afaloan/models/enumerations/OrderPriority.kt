@@ -1,6 +1,6 @@
 package com.example.afaloan.models.enumerations
 
-enum class BidPriority {
+enum class OrderPriority {
     LOW,
     MEDIUM_LOW,
     MEDIUM,

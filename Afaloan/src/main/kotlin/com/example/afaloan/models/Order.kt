@@ -1,7 +1,7 @@
 package com.example.afaloan.models
 
-import com.example.afaloan.models.enumerations.BidPriority
-import com.example.afaloan.models.enumerations.BidStatus
+import com.example.afaloan.models.enumerations.OrderPriority
+import com.example.afaloan.models.enumerations.OrderStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -17,8 +17,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
-@Table(name = "bids")
-data class Bid(
+@Table(name = "orders")
+data class Order(
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,11 +35,11 @@ data class Bid(
 
     @Column(name = "priority")
     @Enumerated(EnumType.STRING)
-    val priority: BidPriority,
+    val priority: OrderPriority,
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    val status: BidStatus,
+    val status: OrderStatus,
 
     @Column(name = "employee_message")
     val employeeMessage: String? = null,

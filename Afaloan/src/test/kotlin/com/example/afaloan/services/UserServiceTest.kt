@@ -5,12 +5,8 @@ import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.User
 import com.example.afaloan.models.UserRole
 import com.example.afaloan.repositories.UserRepository
-import com.example.afaloan.utils.UNAUTHORIZED_USER
 import com.example.afaloan.utils.USER
-import com.example.afaloan.utils.mockSecurityContext
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -18,7 +14,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.context.SecurityContextHolder
 import java.util.*
 
 class UserServiceTest {
@@ -27,12 +22,6 @@ class UserServiceTest {
     private val userRepository = mock<UserRepository>()
 
     private val userService = UserService(roleService, userRepository)
-
-    @BeforeEach
-    fun setUp() = mockSecurityContext()
-
-    @AfterEach
-    fun tearDown() = SecurityContextHolder.clearContext()
 
     @Test
     fun `isExists should return true`() {
@@ -84,6 +73,27 @@ class UserServiceTest {
     }
 
     @Test
+    fun `create should execute successfully`() {
+        whenever(userRepository.existsByUsername(any())).thenReturn(false)
+        whenever(userRepository.save(any<User>())).thenReturn(USER)
+
+        val result = userService.create(USER)
+
+        assertThat(result.id).isEqualTo(USER.id)
+        assertThat(result.username).isEqualTo(USER.username)
+    }
+
+    @Test
+    fun `create should throw USER_ALREADY_EXISTS`() {
+        whenever(userRepository.existsByUsername(any())).thenReturn(true)
+
+        val ex = assertThrows<InternalException> { userService.create(USER) }
+
+        assertThat(ex.httpStatus).isEqualTo(HttpStatus.BAD_REQUEST)
+        assertThat(ex.errorCode).isEqualTo(ErrorCode.USER_ALREADY_EXISTS)
+    }
+
+    @Test
     fun `updateRoles should execute successfully`() {
         val roles = USER.roles
         whenever(userRepository.findById(any())).thenReturn(Optional.of(USER))
@@ -126,29 +136,9 @@ class UserServiceTest {
     }
 
     @Test
-    fun `delete(id UUID) should throw FORBIDDEN`() {
-        whenever(userRepository.findById(any())).thenReturn(Optional.of(UNAUTHORIZED_USER))
-
-        val ex = assertThrows<InternalException> { userService.delete(UNAUTHORIZED_USER.id!!) }
-
-        assertThat(ex.httpStatus).isEqualTo(HttpStatus.FORBIDDEN)
-        assertThat(ex.errorCode).isEqualTo(ErrorCode.FORBIDDEN)
-    }
-
-    @Test
     fun `delete(username String) should execute successfully`() {
         whenever(userRepository.findByUsername(any())).thenReturn(USER)
 
         assertDoesNotThrow { userService.delete(USER.username) }
-    }
-
-    @Test
-    fun `delete(username String) should throw FORBIDDEN`() {
-        whenever(userRepository.findByUsername(any())).thenReturn(UNAUTHORIZED_USER)
-
-        val ex = assertThrows<InternalException> { userService.delete(UNAUTHORIZED_USER.username) }
-
-        assertThat(ex.httpStatus).isEqualTo(HttpStatus.FORBIDDEN)
-        assertThat(ex.errorCode).isEqualTo(ErrorCode.FORBIDDEN)
     }
 }

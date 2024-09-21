@@ -60,7 +60,7 @@ class ProcessService(
         val calculateProcess =
             processes.map {
                 it.copy(
-                    debt = it.debt.multiply(BigDecimal.ONE.plus(it.bid!!.microloan!!.monthlyInterest))
+                    debt = it.debt.multiply(BigDecimal.ONE.plus(it.order!!.microloan!!.monthlyInterest))
                 )
             }
         processRepository.saveAll(calculateProcess)

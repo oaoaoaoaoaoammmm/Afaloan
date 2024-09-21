@@ -58,6 +58,7 @@ databaseChangeLog:
                   type: uuid
                   constraints:
                     nullable: false
+                    unique: true
         - addForeignKeyConstraint:
             baseTableSchemaName: application
             baseTableName: profiles

@@ -28,12 +28,10 @@ repositories {
     mavenCentral()
 }
 
-val minioVersion by extra("8.5.11")
 val openApiStarterVersion by extra("2.4.0")
 val kLoggingVersion by extra("6.0.8")
 val preliquibaseVersion by extra("1.5.1")
 val jwtVersion by extra("0.12.6")
-//val hypersistenceVersion by extra("3.7.5")
 val mockitoKotlinVersion by extra("5.3.1")
 val shedLockVersion by extra("5.12.0")
 
@@ -46,11 +44,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.liquibase:liquibase-core")
     runtimeOnly("org.postgresql:postgresql")
-    //implementation("io.hypersistence:hypersistence-utils-hibernate-63:$hypersistenceVersion")
     implementation ("net.lbruun.springboot:preliquibase-spring-boot-starter:$preliquibaseVersion")
-
-    // minio
-    implementation("io.minio:minio:$minioVersion")
 
     // kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -58,14 +52,6 @@ dependencies {
 
     // log
     implementation("io.github.oshai:kotlin-logging-jvm:$kLoggingVersion")
-
-    // security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
-    // jwt
-    implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
-    implementation("io.jsonwebtoken:jjwt-impl:$jwtVersion")
-    implementation("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
 
     // shedlock
     implementation("net.javacrumbs.shedlock:shedlock-spring:$shedLockVersion")

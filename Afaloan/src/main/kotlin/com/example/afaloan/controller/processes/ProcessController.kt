@@ -10,11 +10,11 @@ import com.example.afaloan.services.ProcessService
 import com.example.afaloan.utils.logger
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.Valid
+import org.springdoc.core.converters.models.PageableAsQueryParam
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -41,6 +41,7 @@ class ProcessController(
     }
 
     @GetMapping
+    @PageableAsQueryParam
     @ResponseStatus(HttpStatus.OK)
     fun findPage(
         @Schema(hidden = true) @PageableDefault(size = DEFAULT_PAGE_SIZE) pageable: Pageable
@@ -51,7 +52,6 @@ class ProcessController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun create(@Valid @RequestBody request: CreateProcessRequest): CreateProcessResponse {
         logger.trace { "Create process request" }
         val process = processMapper.convert(request)
@@ -61,7 +61,6 @@ class ProcessController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun update(
         @PathVariable id: UUID,
         @Valid @RequestBody dto: ProcessDto

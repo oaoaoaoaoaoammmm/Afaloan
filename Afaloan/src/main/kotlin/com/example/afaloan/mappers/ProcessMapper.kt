@@ -5,12 +5,12 @@ import com.example.afaloan.controller.processes.dtos.ProcessDto
 import com.example.afaloan.controller.processes.dtos.ProcessView
 import com.example.afaloan.models.Process
 import com.example.afaloan.models.enumerations.ProcessStatus
-import com.example.afaloan.services.BidService
+import com.example.afaloan.services.OrderService
 import org.springframework.stereotype.Component
 
 @Component
 class ProcessMapper(
-    private val bidService: BidService
+    private val orderService: OrderService
 ) {
 
     fun convertToDto(process: Process): ProcessDto {
@@ -18,7 +18,7 @@ class ProcessMapper(
             debt = process.debt,
             status = process.status,
             comment = process.comment,
-            bidId = process.bid!!.id!!
+            orderId = process.order!!.id!!
         )
     }
 
@@ -36,7 +36,7 @@ class ProcessMapper(
             debt = request.debt,
             status = ProcessStatus.CREATED,
             comment = request.comment,
-            bid = bidService.find(request.bidId)
+            order = orderService.find(request.orderId)
         )
     }
 
@@ -45,7 +45,7 @@ class ProcessMapper(
             debt = dto.debt,
             comment = dto.comment,
             status = dto.status,
-            bid = bidService.find(dto.bidId)
+            order = orderService.find(dto.orderId)
         )
     }
 }

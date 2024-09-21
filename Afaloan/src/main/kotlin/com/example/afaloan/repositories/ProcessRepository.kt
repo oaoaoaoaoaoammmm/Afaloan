@@ -10,15 +10,15 @@ interface ProcessRepository: JpaRepository<Process, UUID> {
 
     @Query("""
         select process from Process process
-        left join fetch process.bid
+        left join fetch process.order
         where process.id = :id
     """)
     override fun findById(id: UUID): Optional<Process>
 
     @Query("""
         select process from Process process
-        left join fetch process.bid bid
-        left join fetch bid.microloan
+        left join fetch process.order order
+        left join fetch order.microloan
         where process.status = :status
     """)
     fun findAllByStatus(status: ProcessStatus): List<Process>

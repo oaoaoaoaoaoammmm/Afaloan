@@ -34,6 +34,6 @@ data class Process(
     val status: ProcessStatus,
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bid_id", referencedColumnName = "id")
-    val bid: Bid? = null
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    val order: Order? = null
 )

@@ -10,5 +10,5 @@ data class CreateProcessRequest(
     val debt: BigDecimal,
     @field:Size(min = 1, max = 64)
     val comment: String,
-    val bidId: UUID
+    val orderId: UUID
 )

@@ -7,7 +7,7 @@ COPY src ./src
 COPY build.gradle.kts ./build.gradle.kts
 COPY settings.gradle.kts ./settings.gradle.kts
 
-RUN gradle clean build -x test
+RUN gradle clean build -x test -x koverVerify
 
 FROM amazoncorretto:21-alpine
 

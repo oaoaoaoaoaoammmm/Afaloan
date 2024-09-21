@@ -8,5 +8,5 @@ data class ProcessDto(
     val debt: BigDecimal,
     val comment: String,
     val status: ProcessStatus,
-    val bidId: UUID
+    val orderId: UUID
 )

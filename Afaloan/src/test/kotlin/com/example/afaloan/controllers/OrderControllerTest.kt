@@ -1,19 +1,18 @@
 package com.example.afaloan.controllers
 
 import com.example.afaloan.BaseIntegrationTest
-import com.example.afaloan.controller.bids.dtos.BidDto
-import com.example.afaloan.controller.bids.dtos.CreateBidRequest
-import com.example.afaloan.controller.bids.dtos.CreateBidResponse
+import com.example.afaloan.controller.orders.dtos.OrderDto
+import com.example.afaloan.controller.orders.dtos.CreateOrderRequest
+import com.example.afaloan.controller.orders.dtos.CreateOrderResponse
 import com.example.afaloan.controller.boilingpoints.dtos.CreateBoilingPointResponse
 import com.example.afaloan.controller.microloans.dtos.CreateMicroloanResponse
-import com.example.afaloan.controller.profiles.dtos.CreateProfileResponse
-import com.example.afaloan.models.enumerations.BidPriority
-import com.example.afaloan.models.enumerations.BidStatus
-import com.example.afaloan.utils.toObject
-import com.example.afaloan.utils.toJson
-import com.example.afaloan.utils.createCreateProfileRequest
-import com.example.afaloan.utils.createMicroloanDto
+import com.example.afaloan.models.enumerations.OrderPriority
+import com.example.afaloan.models.enumerations.OrderStatus
 import com.example.afaloan.utils.createCreateBoilingPointRequest
+import com.example.afaloan.utils.PROFILE
+import com.example.afaloan.utils.createMicroloanDto
+import com.example.afaloan.utils.toJson
+import com.example.afaloan.utils.toObject
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -23,94 +22,93 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.UUID
 
-class BidControllerTest: BaseIntegrationTest() {
+class OrderControllerTest: BaseIntegrationTest() {
 
     @Test
     fun `create should return CREATED`() {
-        createBid()
+        createOrder()
     }
 
     @Test
     fun `find should return OK`() {
-        createBidAndGet()
+        createOrderAndGet()
     }
 
     @Test
     fun `findPageByBoilingPointId should return OK`() {
-        val bid = createBidAndGet()
+        val order = createOrderAndGet()
         mockMvc.perform(
-            get("$API_PREFIX/bids")
+            get("$API_PREFIX/orders")
                 .param("page", "0")
-                .param("boilingPointId", bid.boilingPointId.toString())
+                .param("boilingPointId", order.boilingPointId.toString())
         ).andExpectAll(
             status().isOk,
             jsonPath("$.content[0].id").isNotEmpty,
-            jsonPath("$.content[0].target").value(bid.target),
-            jsonPath("$.content[0].status").value(bid.status.name)
+            jsonPath("$.content[0].target").value(order.target),
+            jsonPath("$.content[0].status").value(order.status.name)
         )
     }
 
     @Test
     fun `findPageByProfileId should return OK`() {
-        val bid = createBidAndGet()
+        val order = createOrderAndGet()
         mockMvc.perform(
-            get("$API_PREFIX/bids")
+            get("$API_PREFIX/orders")
                 .param("page", "0")
-                .param("profileId", bid.profileId.toString())
+                .param("profileId", order.profileId.toString())
         ).andExpectAll(
             status().isOk,
             jsonPath("$.content[0].id").isNotEmpty,
-            jsonPath("$.content[0].target").value(bid.target),
-            jsonPath("$.content[0].status").value(bid.status.name)
+            jsonPath("$.content[0].target").value(order.target),
         )
     }
 
     @Test
     fun `findPageByMicroloanId should return OK`() {
-        val bid = createBidAndGet()
+        val order = createOrderAndGet()
         mockMvc.perform(
-            get("$API_PREFIX/bids")
+            get("$API_PREFIX/orders")
                 .param("page", "0")
-                .param("microloanId", bid.microloanId.toString())
+                .param("microloanId", order.microloanId.toString())
         ).andExpectAll(
             status().isOk,
             jsonPath("$.content[0].id").isNotEmpty,
-            jsonPath("$.content[0].target").value(bid.target),
-            jsonPath("$.content[0].status").value(bid.status.name)
+            jsonPath("$.content[0].target").value(order.target),
+            jsonPath("$.content[0].status").value(order.status.name)
         )
     }
 
     @Test
     fun `updateStatus should return NO_CONTENT`() {
-        val bidId = createBid()
+        val orderId = createOrder()
         mockMvc.perform(
-            patch("$API_PREFIX/bids/$bidId")
-                .param("status", BidStatus.REJECTED.name)
+            patch("$API_PREFIX/orders/$orderId")
+                .param("status", OrderStatus.REJECTED.name)
                 .param("employeeMessage", "не не не... не не не.")
         ).andExpect(status().isNoContent)
     }
 
-    private fun createBidAndGet(): BidDto {
-        val bidId = createBid()
+    private fun createOrderAndGet(): OrderDto {
+        val orderId = createOrder()
         return mockMvc.perform(
-            get("$API_PREFIX/bids/$bidId")
+            get("$API_PREFIX/orders/$orderId")
         ).andExpectAll(
             status().isOk,
             jsonPath("$.target").isNotEmpty,
             jsonPath("$.status").isNotEmpty,
             jsonPath("$.profileId").isNotEmpty,
-        ).andReturn().response.contentAsString.toObject<BidDto>()
+        ).andReturn().response.contentAsString.toObject<OrderDto>()
     }
 
-    private fun createBid(): UUID {
+    private fun createOrder(): UUID {
         val response = mockMvc.perform(
-            post("$API_PREFIX/bids")
+            post("$API_PREFIX/orders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    CreateBidRequest(
+                    CreateOrderRequest(
                         target = "target",
                         coverLetter = "cover letter",
-                        priority = BidPriority.MEDIUM,
+                        priority = OrderPriority.MEDIUM,
                         employeeMessage = "employee message",
                         profileId = createProfile(),
                         microloanId = createMicroloan(),
@@ -120,20 +118,12 @@ class BidControllerTest: BaseIntegrationTest() {
         ).andExpectAll(
             status().isCreated,
             jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString.toObject<CreateBidResponse>()
+        ).andReturn().response.contentAsString.toObject<CreateOrderResponse>()
         return response.id
     }
 
     private fun createProfile(): UUID {
-        val response = mockMvc.perform(
-            post("$API_PREFIX/profiles")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(createCreateProfileRequest().toJson())
-        ).andExpectAll(
-            status().isCreated,
-            jsonPath("$.id").isNotEmpty
-        ).andReturn().response.contentAsString.toObject<CreateProfileResponse>()
-        return response.id
+        return PROFILE.id!!
     }
 
     private fun createMicroloan(): UUID {

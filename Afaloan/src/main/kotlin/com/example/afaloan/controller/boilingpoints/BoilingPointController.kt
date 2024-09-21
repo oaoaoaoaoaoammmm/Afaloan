@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -53,7 +52,6 @@ class BoilingPointController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun create(@Valid @RequestBody request: CreateBoilingPointRequest): CreateBoilingPointResponse {
         logger.trace { "Create boiling point with address - ${request.address}" }
         val boilingPoint = boilingPointMapper.convert(request)
@@ -62,7 +60,6 @@ class BoilingPointController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun update(
         @PathVariable id: UUID,
         @Valid @RequestBody request: UpdateBoilingPointRequest
@@ -74,7 +71,6 @@ class BoilingPointController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyAuthority('SUPERVISOR', 'WORKER')")
     fun delete(@PathVariable id: UUID) {
         logger.trace { "Delete boiling point by id - $id" }
         boilingPointService.delete(id)

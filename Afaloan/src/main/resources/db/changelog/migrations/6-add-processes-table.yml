@@ -30,17 +30,17 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: bid_id
+                  name: order_id
                   type: uuid
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
             baseTableSchemaName: application
             baseTableName: processes
-            baseColumnNames: bid_id
+            baseColumnNames: order_id
             referencedTableSchemaName: application
-            referencedTableName: bids
+            referencedTableName: orders
             referencedColumnNames: id
-            constraintName: fk_processes_to_bids
+            constraintName: fk_processes_to_orders
             onDelete: CASCADE
             onUpdate: CASCADE

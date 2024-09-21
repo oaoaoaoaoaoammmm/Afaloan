@@ -1,6 +1,6 @@
 package com.example.afaloan.models.enumerations
 
-enum class BidStatus {
+enum class OrderStatus {
     CLOSED,
     REJECTED,
     UNDER_CONSIDERATION,

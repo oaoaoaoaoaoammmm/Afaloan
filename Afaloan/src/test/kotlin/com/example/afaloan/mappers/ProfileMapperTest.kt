@@ -1,19 +1,15 @@
 package com.example.afaloan.mappers
 
 import com.example.afaloan.services.UserService
+import com.example.afaloan.utils.PROFILE
 import com.example.afaloan.utils.USER
-import com.example.afaloan.utils.createProfile
 import com.example.afaloan.utils.createCreateProfileRequest
 import com.example.afaloan.utils.createUpdateProfileRequest
-import com.example.afaloan.utils.mockSecurityContext
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import org.springframework.security.core.context.SecurityContextHolder
 import java.util.UUID
 
 class ProfileMapperTest {
@@ -21,12 +17,6 @@ class ProfileMapperTest {
     private val userService = mock<UserService>()
 
     private val profileMapper = ProfileMapper(userService)
-
-    @BeforeEach
-    fun setUp() = mockSecurityContext()
-
-    @AfterEach
-    fun tearDown() = SecurityContextHolder.clearContext()
 
     @Test
     fun `convert(request CreateProfileRequest) should execute successfully`() {
@@ -54,7 +44,7 @@ class ProfileMapperTest {
 
     @Test
     fun `convert(profile Profile) should execute successfully`() {
-        val profile = createProfile()
+        val profile = PROFILE
 
         val result = profileMapper.convert(profile)
 

@@ -5,7 +5,6 @@ import com.example.afaloan.exceptions.InternalException
 import com.example.afaloan.models.User
 import com.example.afaloan.models.UserRole
 import com.example.afaloan.repositories.UserRepository
-import com.example.afaloan.utils.SecurityContext
 import com.example.afaloan.utils.logger
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -39,6 +38,9 @@ class UserService(
 
     fun create(user: User): User {
         logger.info { "Creating user with username - ${user.username}" }
+        if (userRepository.existsByUsername(user.username)) {
+            throw InternalException(httpStatus = HttpStatus.BAD_REQUEST, errorCode = ErrorCode.USER_ALREADY_EXISTS)
+        }
         return userRepository.save(user)
     }
 
@@ -77,34 +79,14 @@ class UserService(
         userRepository.save(updatedUser)
     }
 
-    @Transactional
-    fun confirmUsername(id: UUID) {
-        val user = find(id)
-        val userId = SecurityContext.getAuthorizedUserId()
-        if (user.id != userId) {
-            throw InternalException(httpStatus = HttpStatus.FORBIDDEN, errorCode = ErrorCode.FORBIDDEN)
-        }
-        TODO("Not implemented yet, mb send email?")
-    }
-
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun delete(id: UUID) {
-        val user = find(id)
-        val userId = SecurityContext.getAuthorizedUserId()
-        if (user.id != userId) {
-            throw InternalException(httpStatus = HttpStatus.FORBIDDEN, errorCode = ErrorCode.FORBIDDEN)
-        }
         logger.info { "Deleting user by id - $id" }
         userRepository.deleteById(id)
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     fun delete(username: String) {
-        val user = find(username)
-        val userId = SecurityContext.getAuthorizedUserId()
-        if (user.id != userId) {
-            throw InternalException(httpStatus = HttpStatus.FORBIDDEN, errorCode = ErrorCode.FORBIDDEN)
-        }
         logger.info { "Deleting user by username - $username" }
         userRepository.deleteByUsername(username)
     }

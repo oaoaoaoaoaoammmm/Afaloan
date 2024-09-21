@@ -5,7 +5,6 @@ import com.example.afaloan.controller.profiles.dtos.ProfileDto
 import com.example.afaloan.controller.profiles.dtos.UpdateProfileRequest
 import com.example.afaloan.models.Profile
 import com.example.afaloan.services.UserService
-import com.example.afaloan.utils.SecurityContext
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,7 +13,6 @@ class ProfileMapper(
 ) {
 
     fun convert(request: CreateProfileRequest): Profile {
-        val userId = SecurityContext.getAuthorizedUserId()
         return Profile(
             name = request.name,
             surname = request.surname,
@@ -25,12 +23,11 @@ class ProfileMapper(
             snils = request.snils,
             inn = request.inn,
             monthlyIncome = request.monthlyIncome,
-            user = userService.find(userId)
+            user = userService.find(request.userId)
         )
     }
 
     fun convert(request: UpdateProfileRequest): Profile {
-        val userId = SecurityContext.getAuthorizedUserId()
         return Profile(
             name = request.name,
             surname = request.surname,
@@ -39,7 +36,7 @@ class ProfileMapper(
             passportSeries = request.passportSeries,
             passportNumber = request.passportNumber,
             monthlyIncome = request.monthlyIncome,
-            user = userService.find(userId)
+            user = userService.find(request.userId)
         )
     }
 
